@@ -12,7 +12,7 @@ namespace AduioShop.Data.Mocks
                 return new List<Category>
                 {
                     new Category (categoryName: "Headphones", description: "TEXT" ),
-                    new Category (categoryName: "Dynamics", description: "TEXT1" )
+                    new Category (categoryName: "Speakers", description: "TEXT1" )
                 };
             }
         
