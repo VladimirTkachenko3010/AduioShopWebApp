@@ -15,8 +15,13 @@
         public int Price { get; set; }
         public bool IsFavorite { get; set; }
         public bool IsAvailible { get; set; }
-        public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
+        public int CategoryId { get; set; } // Foreign key property
+        public virtual Category Category { get; set; }  // Navigation property
+
+        public Product()
+        {
+            
+        }
 
         public Product(int id, string productType, string brand, string name, string description,
             string shortDesc, string img, int price, bool isFavorite, bool isAvailible, int categoryId, Category category )
