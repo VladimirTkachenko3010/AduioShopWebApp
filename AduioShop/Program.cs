@@ -1,25 +1,48 @@
-var builder = WebApplication.CreateBuilder(args);
+using AduioShop.Data.Interfaces;
+using AduioShop.Data.Mocks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-// Add services to the container.
-builder.Services.AddRazorPages();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+namespace AduioShop
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Добавление сервисов
+            ConfigureServices(builder.Services);
+
+            var app = builder.Build();
+
+            // Настройка HTTP-конвейера
+            Configure(app);
+
+            app.Run();
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddTransient<IAllProducts, MockProducts>();
+            services.AddTransient<IProductsCategory, MockCategory>();
+            services.AddControllersWithViews();
+        }
+
+        private static void Configure(IApplicationBuilder app)
+        {
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Products}/{action=Catalog}/{id?}");
+            });
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.Run();

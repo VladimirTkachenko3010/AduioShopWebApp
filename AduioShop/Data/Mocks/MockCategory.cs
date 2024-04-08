@@ -3,7 +3,7 @@ using AduioShop.Data.Models;
 
 namespace AduioShop.Data.Mocks
 {
-    public class MockCategory : IProductCategory
+    public class MockCategory : IProductsCategory
     {
         public IEnumerable<Category> AllCategories
         {

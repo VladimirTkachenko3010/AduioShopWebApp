@@ -12,7 +12,7 @@
         public string Description { get; set; }
         public string ShortDesc { get; set; }
         public string Img { get; set; }
-        public int Price { get; set; }= 0;
+        public int Price { get; set; }
         public bool IsFavorite { get; set; }
         public bool IsAvailible { get; set; }
         public int CategoryId { get; set; }

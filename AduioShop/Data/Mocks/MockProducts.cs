@@ -5,7 +5,7 @@ namespace AduioShop.Data.Mocks
 {
     public class MockProducts : IAllProducts
     {
-        private readonly IProductCategory _categoryProducts = new MockCategory();   //?
+        private readonly IProductsCategory _categoryProducts = new MockCategory();   //?
         public IEnumerable<Product> Products
         {
             get

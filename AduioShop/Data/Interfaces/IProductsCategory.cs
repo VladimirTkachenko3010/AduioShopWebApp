@@ -2,7 +2,7 @@
 
 namespace AduioShop.Data.Interfaces
 {
-    public interface IProductCategory
+    public interface IProductsCategory
     {
         IEnumerable<Category> AllCategories { get; }
     }
