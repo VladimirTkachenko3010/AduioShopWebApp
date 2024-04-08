@@ -1,8 +1,7 @@
 using AduioShop.Data.Interfaces;
 using AduioShop.Data.Mocks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using AudioShop.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace AduioShop
 {
@@ -23,10 +22,16 @@ namespace AduioShop
             app.Run();
         }
 
+        private static IConfiguration _conString;
+        public Program(Microsoft.AspNetCore.Hosting.IWebHostEnvironment hosting)
+        {
+            _conString = new ConfigurationBuilder().SetBasePath(hosting.ContentRootPath).AddJsonFile("dbsettings.json").Build();
+        }
         private static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IAllProducts, MockProducts>();
-            services.AddTransient<IProductsCategory, MockCategory>();
+            services.AddDbContext<AudioShopDBContext>(options => options.UseSqlServer(_conString.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IAllProducts, ProductRepository>();
+            services.AddTransient<IProductsCategory, CategoryRepository>();
             services.AddControllersWithViews();
         }
 

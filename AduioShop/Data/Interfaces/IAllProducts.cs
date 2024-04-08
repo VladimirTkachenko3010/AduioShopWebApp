@@ -6,7 +6,7 @@ namespace AduioShop.Data.Interfaces
     public interface IAllProducts
     {
         IEnumerable<Product> Products { get; }
-        IEnumerable<Product> getFavorite { get; set; }
+        IEnumerable<Product> getFavorite { get; }
         Product getObjectProduct(int productId);
     }
 }
