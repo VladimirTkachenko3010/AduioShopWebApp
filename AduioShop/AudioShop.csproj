@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Database\" />
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>
