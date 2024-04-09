@@ -1,5 +1,4 @@
 {
-
   "ConnectionStrings": {
     "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=AudioShopDB;Trusted_Connection=True;MultipleActiveResultSets=true"
   }

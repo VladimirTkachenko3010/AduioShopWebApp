@@ -22,14 +22,21 @@ namespace AduioShop
             app.Run();
         }
 
-        private static IConfiguration _conString;
-        public Program(Microsoft.AspNetCore.Hosting.IWebHostEnvironment hosting)
-        {
-            _conString = new ConfigurationBuilder().SetBasePath(hosting.ContentRootPath).AddJsonFile("dbsettings.json").Build();
-        }
         private static void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AudioShopDBContext>(options => options.UseSqlServer(_conString.GetConnectionString("DefaultConnection")));
+            // Добавление возможности чтения конфигурации из файла dbsettings.json
+            var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("dbsettings.json", optional: false, reloadOnChange: true);
+
+            IConfiguration configuration = configBuilder.Build();
+
+            // Использование конфигурации для получения строки подключения
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<AudioShopDBContext>(options =>
+                options.UseSqlServer(connectionString));
+
             services.AddTransient<IAllProducts, ProductRepository>();
             services.AddTransient<IProductsCategory, CategoryRepository>();
             services.AddControllersWithViews();
