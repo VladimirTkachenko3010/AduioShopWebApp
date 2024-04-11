@@ -11,8 +11,8 @@ namespace AduioShop.Data.Mocks
             {
                 return new List<Category>
                 {
-                    new Category (categoryName: "Headphones", description: "TEXT" ),
-                    new Category (categoryName: "Speakers", description: "TEXT1" )
+                    new Category (productType: "Headphones", description: "TEXT" ),
+                    new Category (productType: "Speakers", description: "TEXT1" )
                 };
             }
         

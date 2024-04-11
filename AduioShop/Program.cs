@@ -55,6 +55,13 @@ namespace AduioShop
                     name: "default",
                     pattern: "{controller=Products}/{action=Catalog}/{id?}");
             });
+
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                AudioShopDBContext context = scope.ServiceProvider.GetRequiredService<AudioShopDBContext>();
+                DBObjects.Initial(context);
+            }
         }
     }
 }

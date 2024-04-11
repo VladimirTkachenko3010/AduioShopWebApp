@@ -39,5 +39,21 @@
             CategoryId = categoryId;
             Category = category;
         }
+
+        public Product(string productType, string brand, string name, string description,
+           string shortDesc, string img, int price, bool isFavorite, bool isAvailible, int categoryId, Category category)
+        {
+            ProductType = productType;
+            Brand = brand;
+            Name = name;
+            Description = description;
+            ShortDesc = shortDesc;
+            Img = img;
+            Price = price;
+            IsFavorite = isFavorite;
+            IsAvailible = isAvailible;
+            CategoryId = categoryId;
+            Category = category;
+        }
     }
 }
