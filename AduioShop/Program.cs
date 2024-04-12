@@ -1,6 +1,7 @@
 using AudioShop.Data.Interfaces;
 using AudioShop.Data.Models;
 using AudioShop.Database;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AudioShop
@@ -48,6 +49,7 @@ namespace AudioShop
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
+
         }
 
         private static void Configure(IApplicationBuilder app)
@@ -58,12 +60,29 @@ namespace AudioShop
 
 
             app.UseRouting();
+            //app.UseMvcWithDefaultRoute();
+
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(name: "default", template: "{controller =Home}/{action =Index}/{id?}");
+            //    routes.MapRoute(name: "categoryFilter", template: "Product/{action}/{category?}", defaults: new { Controller = "Product", action = "Catalog" });
+            //});
 
             app.UseEndpoints(endpoints =>
             {
+
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Products}/{action=Catalog}/{id?}");
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+            name: "categoryFilter",
+            pattern: "Product/{action}/{category?}",
+            defaults: new { controller = "Product", action = "Catalog" });
+
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Products}/{action=Catalog}/{id?}");
             });
 
 
