@@ -43,7 +43,7 @@ namespace AudioShop.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("AudioShop.Data.Models.Category", b =>
@@ -64,7 +64,7 @@ namespace AudioShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("AudioShop.Data.Models.Product", b =>
@@ -115,7 +115,7 @@ namespace AudioShop.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("AudioShop.Data.Models.CartItem", b =>

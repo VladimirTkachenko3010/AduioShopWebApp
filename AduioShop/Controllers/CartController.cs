@@ -41,10 +41,5 @@ namespace AudioShop.Controllers
             return RedirectToAction("Index");
 
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }

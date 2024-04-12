@@ -21,7 +21,7 @@ namespace AudioShop.Data.Mocks
                         shortDesc : "Powerbeats Pro оснащені чипом Apple H1, що дозволяє користуватися голосовим помічником Siri, а також швидко з'єднуватися з пристроями Apple. Кнопки регулювання гучності і управління дзвінками на навушнику.",
                         img: "/img/PowerbeatsPro.jpg",
                         price : 6400,
-                        isFavorite : false,
+                        isFavorite : true,
                         isAvailible : false,
                         categoryId : 1,
                         category : _categoryProducts.AllCategories.First()
@@ -91,7 +91,7 @@ namespace AudioShop.Data.Mocks
                         shortDesc : "Захист від вологи. Підтримка Multiroom. Ємний акумулятор. Велика кількість роз'ємів. Функція Power Bank'а. Можливість підключення одночасно до трьох пристроїв.",
                         img: "/img/Xtreme2.jpg",
                         price : 6750,
-                        isFavorite : false,
+                        isFavorite : true,
                         isAvailible : false,
                         categoryId : 2,
                         category : _categoryProducts.AllCategories.Last()
