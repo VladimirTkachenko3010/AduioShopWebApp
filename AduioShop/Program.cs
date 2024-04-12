@@ -1,9 +1,9 @@
-using AduioShop.Data.Interfaces;
-using AduioShop.Data.Mocks;
+using AudioShop.Data.Interfaces;
+using AudioShop.Data.Models;
 using AudioShop.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace AduioShop
+namespace AudioShop
 {
     public class Program
     {
@@ -40,12 +40,22 @@ namespace AduioShop
             services.AddTransient<IAllProducts, ProductRepository>();
             services.AddTransient<IProductsCategory, CategoryRepository>();
             services.AddControllersWithViews();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => Cart.GetCart(sp));
+
+
+            services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         private static void Configure(IApplicationBuilder app)
         {
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
+
 
             app.UseRouting();
 

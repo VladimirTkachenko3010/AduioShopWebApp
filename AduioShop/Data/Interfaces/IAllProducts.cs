@@ -1,7 +1,7 @@
-﻿using AduioShop.Data.Models;
+﻿using AudioShop.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace AduioShop.Data.Interfaces
+namespace AudioShop.Data.Interfaces
 {
     public interface IAllProducts
     {

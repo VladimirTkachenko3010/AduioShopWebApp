@@ -1,4 +1,4 @@
-﻿using AduioShop.Data.Models;
+﻿using AudioShop.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AudioShop.Database
@@ -13,6 +13,8 @@ namespace AudioShop.Database
 
         public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

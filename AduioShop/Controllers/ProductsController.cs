@@ -1,8 +1,8 @@
-﻿using AduioShop.Data.Interfaces;
+﻿using AudioShop.Data.Interfaces;
 using AudioShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AduioShop.Controllers
+namespace AudioShop.Controllers
 {
     public class ProductsController : Controller
     {

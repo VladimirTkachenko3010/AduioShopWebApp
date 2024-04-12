@@ -1,5 +1,5 @@
-﻿using AduioShop.Data.Interfaces;
-using AduioShop.Data.Models;
+﻿using AudioShop.Data.Interfaces;
+using AudioShop.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AudioShop.Database

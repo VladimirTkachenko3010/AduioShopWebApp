@@ -1,4 +1,4 @@
-﻿namespace AduioShop.Data.Models
+﻿namespace AudioShop.Data.Models
 {
     public class Product
     {

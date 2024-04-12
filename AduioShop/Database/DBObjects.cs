@@ -1,4 +1,4 @@
-﻿using AduioShop.Data.Models;
+﻿using AudioShop.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 
 namespace AudioShop.Database

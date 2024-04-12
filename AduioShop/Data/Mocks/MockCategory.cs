@@ -1,7 +1,7 @@
-﻿using AduioShop.Data.Interfaces;
-using AduioShop.Data.Models;
+﻿using AudioShop.Data.Interfaces;
+using AudioShop.Data.Models;
 
-namespace AduioShop.Data.Mocks
+namespace AudioShop.Data.Mocks
 {
     public class MockCategory : IProductsCategory
     {

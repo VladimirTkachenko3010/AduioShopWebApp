@@ -1,6 +1,6 @@
-﻿using AduioShop.Data.Models;
+﻿using AudioShop.Data.Models;
 
-namespace AduioShop.Data.Interfaces
+namespace AudioShop.Data.Interfaces
 {
     public interface IProductsCategory
     {

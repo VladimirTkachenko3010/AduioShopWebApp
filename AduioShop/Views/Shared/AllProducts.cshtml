@@ -1,0 +1,12 @@
+﻿@using AudioShop.Data.Models
+
+<div class=" col-lg-4">
+
+    <img class=" img-thumbnail" src="@Model.Img" alt="@Model.Name" />
+
+    <h2>Модель: @Model.Name</h2>
+    <p>@Model.ShortDesc</p>
+
+    <p>Цена: @Model.Price.ToString("c")</p>
+    <p><a class="btn btn-warning" href="#">Детальніше</a></p>
+</div>
