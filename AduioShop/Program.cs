@@ -40,6 +40,8 @@ namespace AudioShop
 
             services.AddTransient<IAllProducts, ProductRepository>();
             services.AddTransient<IProductsCategory, CategoryRepository>();
+            services.AddTransient<IAllOrders, OrdersRepository>();
+
             services.AddControllersWithViews();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
