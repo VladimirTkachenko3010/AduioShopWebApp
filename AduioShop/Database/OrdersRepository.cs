@@ -19,7 +19,7 @@ namespace AudioShop.Database
         {
             order.OrderTime = DateTime.Now;
             dbContext.Orders.Add(order);
-            dbContext.SaveChanges();    //?
+            dbContext.SaveChanges();
             List<CartItem> items = cart.CartItems;
             foreach (var elem in items)
             {
@@ -33,7 +33,6 @@ namespace AudioShop.Database
             }
             dbContext.SaveChanges();
         }
-
 
     }
 }

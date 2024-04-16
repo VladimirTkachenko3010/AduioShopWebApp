@@ -1,6 +1,5 @@
 ﻿using AudioShop.Data.Interfaces;
 using AudioShop.Data.Models;
-using AudioShop.Database;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudioShop.Controllers
@@ -8,9 +7,9 @@ namespace AudioShop.Controllers
     public class OrderController : Controller
     {
         private readonly IAllOrders allOrders;
-        private readonly Cart cart;
+        private readonly Data.Models.Cart cart;
 
-        public OrderController(IAllOrders allOrders, Cart cart)
+        public OrderController(IAllOrders allOrders, Data.Models.Cart cart)
         {
             this.allOrders = allOrders;
             this.cart = cart;
@@ -27,16 +26,23 @@ namespace AudioShop.Controllers
 
             cart.CartItems = cart.GetCartItems();
 
-            if(cart.CartItems.Count == 0) 
+            if (cart.CartItems.Count == 0) 
             {
-                ModelState.AddModelError("","У вас повинні бути товари в кошику!");
+                ModelState.AddModelError("", "У вас повинні бути товари в кошику!");
             }
-            if(ModelState.IsValid)
+            if (cart.CartItems.Count > 0) 
             {
                 allOrders.CreateOrder(order);
+            }
+            if (ModelState.IsValid)
+            {
                 return RedirectToAction("CompleteOrder", "Order");
             }
-
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ValidationErrors = ModelState.Values.SelectMany(v => v.Errors).ToList();
+                return RedirectToAction("CompleteOrder", "Order");
+            }
             return View(order);
         }
 
@@ -46,6 +52,5 @@ namespace AudioShop.Controllers
             ViewBag.Message = "Замовлення успішно оброблене";
             return View();
         }
-
     }
 }

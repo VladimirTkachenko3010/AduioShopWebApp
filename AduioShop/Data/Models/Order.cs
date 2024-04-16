@@ -38,6 +38,12 @@ namespace AudioShop.Data.Models
         [BindNever]
         [ScaffoldColumn(false)]
         public DateTime OrderTime { get; set; }
+        [BindNever]
         public List<OrderDetail> OrderDetails { get; set; }
+
+        public Order()
+        {
+            OrderDetails = new List<OrderDetail>();
+        }
     }
 }
