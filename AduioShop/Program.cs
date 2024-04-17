@@ -1,6 +1,7 @@
 using AudioShop.Data.Interfaces;
 using AudioShop.Data.Models;
 using AudioShop.Database;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,6 +50,29 @@ namespace AudioShop
 
 
             services.AddMvc();
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AudioShopDBContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 6; // минимальное количество знаков в пароле
+                options.Lockout.MaxFailedAccessAttempts = 10; // количество попыток о блокировки
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.AllowedForNewUsers = true;
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                // конфигурация Cookie с целью использования их для хранения авторизации
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(2); // Устанавливаем время жизни куки на 2 часа
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.SlidingExpiration = true;
+            });
+
+
             services.AddMemoryCache();
             services.AddSession();
 
@@ -59,16 +83,10 @@ namespace AudioShop
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseAuthentication();
 
 
             app.UseRouting();
-            //app.UseMvcWithDefaultRoute();
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(name: "default", template: "{controller =Home}/{action =Index}/{id?}");
-            //    routes.MapRoute(name: "categoryFilter", template: "Product/{action}/{category?}", defaults: new { Controller = "Product", action = "Catalog" });
-            //});
 
             app.UseEndpoints(endpoints =>
             {
@@ -81,10 +99,6 @@ namespace AudioShop
             name: "categoryFilter",
             pattern: "Product/{action}/{category?}",
             defaults: new { controller = "Product", action = "Catalog" });
-
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Products}/{action=Catalog}/{id?}");
             });
 
 

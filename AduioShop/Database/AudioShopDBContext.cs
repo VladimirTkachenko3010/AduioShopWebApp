@@ -1,9 +1,11 @@
 ﻿using AudioShop.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AudioShop.Database
 {
-    public class AudioShopDBContext : DbContext
+    public class AudioShopDBContext : IdentityDbContext<User>
     {
         public AudioShopDBContext(DbContextOptions<AudioShopDBContext> options) : base(options)
         {
@@ -16,14 +18,16 @@ namespace AudioShop.Database
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-
+        public DbSet<User> AspNetUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
+
         }
 
     }
