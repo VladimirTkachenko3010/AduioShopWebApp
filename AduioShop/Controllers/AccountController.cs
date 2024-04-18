@@ -23,12 +23,10 @@ namespace AudioShop.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
+            //returnUrl = @"https://localhost:7104/Account/Login";
             log.LogWarning($" ------- \n >> Login(string returnUrl) сработал, returnUrl = {returnUrl}\n ------- \n ");
 
-            return View(new UserLogin()
-            {
-                ReturnUrl = returnUrl
-            });
+            return View(new UserLogin());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -43,14 +41,24 @@ namespace AudioShop.Controllers
 
                 if (loginResult.Succeeded)
                 {
-                    if (Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
+                    //if (Url.IsLocalUrl(model.ReturnUrl))
+                    //{
+                    //    return Redirect(model.ReturnUrl);
+                    //}
 
                     return RedirectToAction("Index", "Home");
                 }
 
+            }
+            else
+            {
+                // Перебираем все ошибки валидации в ModelState
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    // Добавляем каждую ошибку к списку ошибок для отображения на странице
+                    ModelState.AddModelError("", error.ErrorMessage);
+
+                }
             }
 
             ModelState.AddModelError("", "Пользователь не найден");

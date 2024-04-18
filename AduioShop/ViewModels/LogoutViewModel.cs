@@ -2,7 +2,8 @@
 
 namespace AudioShop.ViewModels
 {
-    public class LogoutViewModel : ViewComponent
+    [ViewComponent]
+    public class LogoutViewModel: ViewComponent
     {
         public IViewComponentResult Invoke()
         {

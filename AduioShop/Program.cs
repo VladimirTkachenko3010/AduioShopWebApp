@@ -12,7 +12,8 @@ namespace AudioShop
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
+            builder.WebHost.ConfigureLogging(log => log.AddConsole());
             // Добавление сервисов
             ConfigureServices(builder.Services);
 
@@ -20,7 +21,7 @@ namespace AudioShop
 
             // Настройка HTTP-конвейера
             Configure(app);
-
+            
             app.Run();
         }
 

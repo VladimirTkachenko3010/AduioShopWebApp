@@ -35,6 +35,25 @@
                     <button type="button" class="btn btn-outline-light me-2" onclick="window.location.href = '@Url.Action("Register", "Account")'">Register</button>
                     <button type="button" class="btn btn-warning" onclick="window.location.href = '@Url.Action("Login", "Account")'">Login</button>
                 </div>
+
+
+                    <nav class="container">
+                    <div> @await Component.InvokeAsync("LogoutViewModel") </div>
+                    </nav>
+                    @* <div class="container">
+                        @RenderBody()
+                    </div> *@
+                    <style>
+                        .container {
+                            padding-top: 10px;
+                        }
+
+                        .validation-summary-errors {
+                            color: #f00;
+                        }
+                    </style>
+
+
             </div>
         </div>
     </header>
