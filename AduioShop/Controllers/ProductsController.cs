@@ -1,5 +1,6 @@
 ﻿using AudioShop.Data.Interfaces;
 using AudioShop.Data.Models;
+using AudioShop.Database;
 using AudioShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,11 @@ namespace AudioShop.Controllers
             this.productsCategory = productsCategory;
         }
 
+        public IActionResult GetSearch(string searchTerm)
+        {
+            var products = allProducts.SearchProducts(searchTerm);  
+            return View(products);
+        }
 
         [Route("Products/Catalog")]
         [Route("Products/Catalog/{category}")]

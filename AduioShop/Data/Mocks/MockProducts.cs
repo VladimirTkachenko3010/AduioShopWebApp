@@ -106,6 +106,11 @@ namespace AudioShop.Data.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Product> SearchProducts(string searchTerm)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

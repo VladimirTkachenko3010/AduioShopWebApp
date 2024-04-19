@@ -1,4 +1,6 @@
-﻿namespace AudioShop.Data.Models
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace AudioShop.Data.Models
 {
     public class Product
     {
@@ -15,6 +17,8 @@
         public int Price { get; set; }
         public bool IsFavorite { get; set; }
         public bool IsAvailible { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
         public int CategoryId { get; set; } // Foreign key property
         public virtual Category Category { get; set; }  // Navigation property
 
@@ -24,7 +28,7 @@
         }
 
         public Product(int id, string productType, string brand, string name, string description,
-            string shortDesc, string img, int price, bool isFavorite, bool isAvailible, int categoryId, Category category )
+            string shortDesc, string img, int price, bool isFavorite, bool isAvailible, int categoryId, Category category)  
         {
             Id = id;
             ProductType = productType;
@@ -38,6 +42,7 @@
             IsAvailible = isAvailible;
             CategoryId = categoryId;
             Category = category;
+            //SearchTerm = searchTerm;
         }
 
         public Product(string productType, string brand, string name, string description,
@@ -54,6 +59,7 @@
             IsAvailible = isAvailible;
             CategoryId = categoryId;
             Category = category;
+            //SearchTerm = searchTerm;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace AudioShop.Data.Interfaces
     {
         IEnumerable<Product> Products { get; }
         IEnumerable<Product> getFavorite { get; }
+        IEnumerable<Product> SearchProducts(string searchTerm);
         Product getObjectProduct(int productId);
     }
 }

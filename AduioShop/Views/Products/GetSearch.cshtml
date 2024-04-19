@@ -1,0 +1,15 @@
+﻿@using AudioShop.Data.Models
+
+<h1>Результати Пошуку:</h1>
+
+    <div class="row mt-5 mb-2">
+
+        @{
+            foreach (Product product in Model)
+            {
+                @Html.Partial("AllProducts", product)
+                ;
+            }
+        }
+
+    </div>
