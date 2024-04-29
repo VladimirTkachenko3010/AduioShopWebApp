@@ -41,5 +41,20 @@ namespace AudioShop.Controllers
             return RedirectToAction("Index");
 
         }
+
+        [HttpPost]
+        public IActionResult RemoveFromCart(int productId)
+        {
+            _cart.RemoveFromCart(productId);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateQuantity(int productId, int quantity)
+        {
+            _cart.UpdateCartItemQuantity(productId, quantity);
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -30,14 +30,51 @@ namespace AudioShop.Data.Models
 
         public void AddToCart(Product product)
         {
-            audioShopDBContext.CartItems.Add(new CartItem
+            var cartItem = audioShopDBContext.CartItems
+        .FirstOrDefault(ci => ci.CartId == CartId && ci.Product.Id == product.Id);
+
+            if (cartItem != null)
             {
-                CartId = CartId,
-                Product = product,
-                Price = product.Price
-            });
+                cartItem.Quantity++;
+            }
+            else
+            {
+                audioShopDBContext.CartItems.Add(new CartItem
+                {
+                    CartId = CartId,
+                    Product = product,
+                    Price = product.Price,
+                    Quantity = 1
+                });
+            }
 
             audioShopDBContext.SaveChanges();
+        }
+
+        public void UpdateCartItemQuantity(int productId, int quantity)
+        {
+            var cartItem = audioShopDBContext.CartItems
+                .FirstOrDefault(ci => ci.CartId == CartId && ci.Product.Id == productId);
+
+            if (cartItem != null)
+            {
+                cartItem.Quantity = quantity;
+                if (cartItem.Quantity < 1)
+                {
+                    cartItem.Quantity = 1;
+                }
+                audioShopDBContext.SaveChanges(); // Сохраняем изменения в базе данных
+            }
+        }
+
+        public void RemoveFromCart(int productId)
+        {
+            var cartItem = audioShopDBContext.CartItems.FirstOrDefault(ci => ci.CartId == CartId && ci.Product.Id == productId);
+            if (cartItem != null)
+            {
+                audioShopDBContext.CartItems.Remove(cartItem);
+                audioShopDBContext.SaveChanges();
+            }
         }
 
         public List<CartItem> GetCartItems()

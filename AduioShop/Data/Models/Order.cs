@@ -10,17 +10,17 @@ namespace AudioShop.Data.Models
 
         [Display(Name = "Введіть ваше Ім'я")]
         [StringLength (25)]
-        [Required(ErrorMessage ="Довжина Ім'я повинна бути не менш ніж 5 символів")]
+        [Required(ErrorMessage ="Довжина Ім'я повинна бути не менш ніж 2 символа")]
         public string Name { get; set; }
 
         [Display(Name = "Введіть вашу Фамілію")]
         [StringLength(25)]
-        [Required(ErrorMessage = "Довжина Фамілії повинна бути не менш ніж 5 символів")]
+        [Required(ErrorMessage = "Довжина Фамілії повинна бути не менш ніж 2 символа")]
         public string Surname { get; set; }
 
-        [Display(Name = "Введіть вашу Номер відділення Нової Пошти")]
-        [StringLength(5)]
-        [Required(ErrorMessage = "Довжина Номеру відділення Нової Пошти повинна бути не менш ніж 1 символ")]
+        [Display(Name = "Введіть Адресу доставки замовлення")]
+        [StringLength(80)]
+        [Required(ErrorMessage = "Довжина Адреси доставки замовлення повинна бути не менш ніж 5 символ")]
         public string Address { get; set; }
 
         [Display(Name = "Введіть ваш Номер телефону")]
