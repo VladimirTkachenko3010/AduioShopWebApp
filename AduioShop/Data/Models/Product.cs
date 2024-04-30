@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AudioShop.Data.Models
 {
@@ -17,8 +19,12 @@ namespace AudioShop.Data.Models
         public int Price { get; set; }
         public bool IsFavorite { get; set; }
         public bool IsAvailible { get; set; }
+        [NotMapped]
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
+        public List<string>? ImageUrls { get; set; }
+
+
         public int CategoryId { get; set; } // Foreign key property
         public virtual Category Category { get; set; }  // Navigation property
 

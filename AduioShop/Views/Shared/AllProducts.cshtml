@@ -1,12 +1,15 @@
 ﻿@using AudioShop.Data.Models
 
 <div class=" col-lg-4">
-
+    <a asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@Model.Id">
     <img class=" img-thumbnail" src="@Model.Img" alt="@Model.Name" />
-
-    <h2>Модель: @Model.Name</h2>
+    </a>
+    <a asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@Model.Id">
+        <h2>Модель: @Model.Name</h2>
+    </a>
     <p>@Model.ShortDesc</p>
 
     <p>Цена: @Model.Price.ToString("c")</p>
+    <p><a class="btn btn-primary" asp-controller="Products" asp-action="ProductDetails" asp-action="ProductImages" asp-route-Id="@Model.Id">Детальніше</a></p>
     <p><a class="btn btn-warning" asp-controller="Cart" asp-action="AddToCart" asp-route-Id="@Model.Id">Додати до кошика</a></p>
 </div>

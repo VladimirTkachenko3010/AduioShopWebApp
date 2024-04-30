@@ -1,8 +1,8 @@
 ﻿using AudioShop.Data.Interfaces;
 using AudioShop.Data.Models;
-using AudioShop.Database;
 using AudioShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace AudioShop.Controllers
 {
@@ -19,7 +19,7 @@ namespace AudioShop.Controllers
 
         public IActionResult GetSearch(string searchTerm)
         {
-            var products = allProducts.SearchProducts(searchTerm);  
+            var products = allProducts.SearchProducts(searchTerm);
             return View(products);
         }
 
@@ -68,18 +68,42 @@ namespace AudioShop.Controllers
                         products = Enumerable.Empty<Product>(); // добавить другие категории?..
                         break;
                 }
-                
             }
-
             var productObj = new ProductsListViewModel
             {
                 allProducts = products,
                 currentCategory = currentCategory
             };
-
             ViewBag.Title = "Headphones page";
-
             return View("Catalog", productObj);
         }
+
+
+        public IActionResult ProductDetails(int id)
+        {
+            var product = allProducts.getObjectProduct(id);
+
+            if (product == null)
+            {
+                ViewBag.ErrorMessage = "Товар не найден";
+                return View("Error"); 
+            }
+            else
+            {
+                var imgFolder = "img"; 
+                var imgPath = Path.Combine(imgFolder, product.ProductType); 
+                string[] productFiles = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imgPath), $"{product.Name}-*.jpg");
+                if (productFiles != null)
+                {
+                    product.ImageUrls = productFiles.Select(file => $"/{imgPath}/{Path.GetFileName(file)}").ToList();
+                }
+                else
+                {
+                    product.ImageUrls = new List<string>();
+                }
+            }
+            return View(product); 
+        }
+
     }
 }

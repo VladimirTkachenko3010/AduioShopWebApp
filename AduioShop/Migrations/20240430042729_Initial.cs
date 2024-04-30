@@ -74,7 +74,7 @@ namespace AudioShop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
                     OrderTime = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -205,6 +205,7 @@ namespace AudioShop.Migrations
                     Price = table.Column<int>(type: "int", nullable: false),
                     IsFavorite = table.Column<bool>(type: "bit", nullable: false),
                     IsAvailible = table.Column<bool>(type: "bit", nullable: false),
+                    ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -226,6 +227,7 @@ namespace AudioShop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     CartId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

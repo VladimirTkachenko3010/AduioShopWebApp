@@ -157,6 +157,9 @@ namespace AudioShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrls")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Img")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -175,10 +178,6 @@ namespace AudioShop.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProductType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SearchTerm")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
