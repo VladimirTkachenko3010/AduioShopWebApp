@@ -4,6 +4,7 @@ using AudioShop.Database;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AudioShop
 {
@@ -21,12 +22,30 @@ namespace AudioShop
 
             // Настройка HTTP-конвейера
             Configure(app);
-            
+
+            // Создание роли "Admin", если она не существует
+            CreateAdminRole(app.Services).GetAwaiter().GetResult();
             app.Run();
+        }
+        private static async Task CreateAdminRole(IServiceProvider serviceProvider)
+        {
+            // Create a scoped service provider to resolve the RoleManager
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var scopedServiceProvider = scope.ServiceProvider;
+                var roleManager = scopedServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                // Создаем роль "Admin", если ее нет
+                if (!await roleManager.RoleExistsAsync("Admin"))
+                {
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                }
+            }
         }
 
         private static void ConfigureServices(IServiceCollection services)
         {
+            
             // Добавление возможности чтения конфигурации из файла dbsettings.json
             var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -41,6 +60,7 @@ namespace AudioShop
                 options.UseSqlServer(connectionString));
 
             services.AddTransient<IAllProducts, ProductRepository>();
+            //services.AddScoped<IAllProducts, ProductRepository>();
             services.AddTransient<IProductsCategory, CategoryRepository>();
             services.AddTransient<IAllOrders, OrdersRepository>();
 
@@ -48,12 +68,13 @@ namespace AudioShop
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => Cart.GetCart(sp));
-
+           
 
             services.AddMvc();
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AudioShopDBContext>()
+                .AddRoles<IdentityRole>()
                 .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
@@ -74,6 +95,14 @@ namespace AudioShop
             });
 
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy =>
+                {
+                    policy.RequireRole("Admin");
+                });
+            });
+
             services.AddMemoryCache();
             services.AddSession();
 
@@ -84,10 +113,11 @@ namespace AudioShop
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
-            app.UseAuthentication();
-
-
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -100,6 +130,21 @@ namespace AudioShop
             name: "categoryFilter",
             pattern: "Product/{action}/{category?}",
             defaults: new { controller = "Product", action = "Catalog" });
+
+            //    endpoints.MapControllerRoute(
+            //name: "default",
+            //pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            //    endpoints.MapControllerRoute(
+            //name: "categoryFilter",
+            //pattern: "Products/{action}/{category?}",
+            //defaults: new { controller = "Products", action = "Catalog" });
+
+            //    // Другие маршруты, если есть
+
+            //    endpoints.MapControllerRoute(
+            //name: "admin",
+            //pattern: "/Admin/{controller=Admin}/{action=Index}/{id?}");
             });
 
 

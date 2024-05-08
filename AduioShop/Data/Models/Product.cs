@@ -19,6 +19,7 @@ namespace AudioShop.Data.Models
         public int Price { get; set; }
         public bool IsFavorite { get; set; }
         public bool IsAvailible { get; set; }
+        [BindNever]
         [NotMapped]
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
@@ -26,6 +27,7 @@ namespace AudioShop.Data.Models
 
 
         public int CategoryId { get; set; } // Foreign key property
+        [BindNever]
         public virtual Category Category { get; set; }  // Navigation property
 
         public Product()

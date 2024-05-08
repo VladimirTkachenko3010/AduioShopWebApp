@@ -9,5 +9,10 @@ namespace AudioShop.Data.Interfaces
         IEnumerable<Product> getFavorite { get; }
         IEnumerable<Product> SearchProducts(string searchTerm);
         Product getObjectProduct(int productId);
+        void AddProduct(Product product);
+
+        Task UpdateProductAsync(Product product);
+        Task<Product> getObjectProductAsync(int id);
+        Task DeleteProductAsync(Product productToDelete);
     }
 }

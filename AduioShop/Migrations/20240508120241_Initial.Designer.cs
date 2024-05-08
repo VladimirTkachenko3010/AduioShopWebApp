@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AudioShop.Migrations
 {
     [DbContext(typeof(AudioShopDBContext))]
-    [Migration("20240430042729_Initial")]
+    [Migration("20240508120241_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

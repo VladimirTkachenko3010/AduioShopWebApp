@@ -6,8 +6,5 @@ namespace AudioShop.ViewModels
     {
         public IEnumerable<Product> allProducts { get; set; }
         public string currentCategory { get; set; }
-
-    
     }
-
 }

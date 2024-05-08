@@ -1,7 +1,9 @@
 ﻿using AudioShop.Data.Interfaces;
 using AudioShop.Data.Models;
+using AudioShop.Database;
 using AudioShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.RegularExpressions;
 
 namespace AudioShop.Controllers
@@ -37,19 +39,6 @@ namespace AudioShop.Controllers
             }
             else
             {
-                #region if-else категории(если нужно только 2 категории)
-                //if (string.Equals("Headphones", category, StringComparison.OrdinalIgnoreCase))
-                //{
-                //    products = allProducts.Products.Where(i => i.Category.ProductType.Equals("Headphones")).OrderBy(x => x.Id);
-                //}
-                //else
-                //{
-                //    if (string.Equals("Speakers", category, StringComparison.OrdinalIgnoreCase))
-                //    {
-                //        products = allProducts.Products.Where(i => i.Category.ProductType.Equals("Speakers")).OrderBy(x => x.Id);
-                //    }
-                //}
-                #endregion
                 switch (category.ToLowerInvariant())
                 {
                     case "headphones":
@@ -65,7 +54,7 @@ namespace AudioShop.Controllers
                         currentCategory = "Портативні колонки";
                         break;
                     default:
-                        products = Enumerable.Empty<Product>(); // добавить другие категории?..
+                        products = Enumerable.Empty<Product>();
                         break;
                 }
             }

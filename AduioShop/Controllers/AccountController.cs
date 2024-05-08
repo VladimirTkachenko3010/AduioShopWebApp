@@ -10,22 +10,23 @@ namespace AudioShop.Controllers
         private readonly ILogger log;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(UserManager<User> userManager,
                                 SignInManager<User> signInManager,
+                                RoleManager<IdentityRole> roleManager,
                                 ILoggerFactory Log)
         {
             this.log = Log.CreateLogger(">>> Мой Logger ");
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
-            //returnUrl = @"https://localhost:7104/Account/Login";
             log.LogWarning($" ------- \n >> Login(string returnUrl) сработал, returnUrl = {returnUrl}\n ------- \n ");
-
             return View(new UserLogin());
         }
 
@@ -41,30 +42,25 @@ namespace AudioShop.Controllers
 
                 if (loginResult.Succeeded)
                 {
-                    //if (Url.IsLocalUrl(model.ReturnUrl))
-                    //{
-                    //    return Redirect(model.ReturnUrl);
-                    //}
-
+                    var user = await _userManager.FindByNameAsync(model.LoginProp);
+                    if (user != null)
+                    {
+                        var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+                        ViewBag.IsAdmin = isAdmin;
+                    }
                     return RedirectToAction("Index", "Home");
                 }
-
             }
             else
             {
-                // Перебираем все ошибки валидации в ModelState
                 foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    // Добавляем каждую ошибку к списку ошибок для отображения на странице
                     ModelState.AddModelError("", error.ErrorMessage);
-
                 }
             }
-
             ModelState.AddModelError("", "Пользователь не найден");
             return View(model);
         }
-
 
         [HttpGet]
         public IActionResult Register()
@@ -78,20 +74,24 @@ namespace AudioShop.Controllers
             if (ModelState.IsValid)
             {
                 var user = new User
-                { 
+                {
                     UserName = model.LoginProp,
                     Email = model.Email,
                     Name = model.Name,
-                    Surname = model.Surname,
+                    Surname = model.Surname
                 };
-                var createResult = await _userManager.CreateAsync(user, model.Password);
 
+                var createResult = await _userManager.CreateAsync(user, model.Password);
                 if (createResult.Succeeded)
                 {
+                    if ((model.Email == "vladimirtkachenko434@gmail.com") && (model.LoginProp == "vtkachenko"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                    }
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
-                else//иначе
+                else
                 {
                     foreach (var identityError in createResult.Errors)
                     {
@@ -101,17 +101,12 @@ namespace AudioShop.Controllers
             }
             else
             {
-                // Перебираем все ошибки валидации в ModelState
                 foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    // Добавляем каждую ошибку к списку ошибок для отображения на странице
                     ModelState.AddModelError("", error.ErrorMessage);
                 }
-
-                // Возвращаем модель обратно на страницу с ошибками
                 return View(model);
             }
-
             return View(model);
         }
 
@@ -122,7 +117,5 @@ namespace AudioShop.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
-
     }
 }

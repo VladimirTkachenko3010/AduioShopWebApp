@@ -12,13 +12,5 @@ namespace AudioShop.Data.Models
 
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }
-        //public string ReturnUrl { get; set; }
-
-        //[BindNever]
-        //public string Name { get; set; }
-        //[BindNever]
-        //public string Surname { get; set; }
-        //[BindNever]
-        //public string PhoneNumber { get; set; } = string.Empty;
     }
 }

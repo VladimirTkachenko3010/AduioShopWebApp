@@ -1,6 +1,5 @@
 ﻿using AudioShop.Data.Interfaces;
 using AudioShop.Data.Models;
-using AudioShop.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace AudioShop.Database
@@ -28,5 +27,37 @@ namespace AudioShop.Database
         }
 
         public Product getObjectProduct(int productId) => audioShopDBContext.Product.FirstOrDefault(p => p.Id == productId);
+
+        public async Task<Product> getObjectProductAsync(int productId) =>
+    await audioShopDBContext.Product.FirstOrDefaultAsync(p => p.Id == productId);
+        public void AddProduct(Product product)
+        {
+            audioShopDBContext.Product.Add(product);
+            audioShopDBContext.SaveChanges();
+        }
+
+
+
+        public async Task UpdateProductAsync(Product product)
+        {
+            var existingProduct = await audioShopDBContext.Product.FirstOrDefaultAsync(p => p.Id == product.Id);
+            if (existingProduct != null)
+            {
+                audioShopDBContext.Entry(existingProduct).CurrentValues.SetValues(product);
+
+                await audioShopDBContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Product not found.");
+            }
+        }
+
+        public async Task DeleteProductAsync(Product productToDelete)
+        {
+            audioShopDBContext.Product.Remove(productToDelete);
+            await audioShopDBContext.SaveChangesAsync();
+        }
     }
 }
+

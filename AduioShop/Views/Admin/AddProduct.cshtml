@@ -1,0 +1,70 @@
+﻿@model AudioShop.ViewModels.ProductEditViewModel
+
+<form asp-action="AddProduct" method="post">
+    <div class="form-group">
+        <label asp-for="Product.ProductType"></label>
+        <input asp-for="Product.ProductType" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Brand"></label>
+        <input asp-for="Product.Brand" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Name"></label>
+        <input asp-for="Product.Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Description"></label>
+        <textarea asp-for="Product.Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.ShortDesc"></label>
+        <input asp-for="Product.ShortDesc" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Img"></label>
+        <input asp-for="Product.Img" class="form-control" />
+    </div>
+    @* <br></br>
+
+    <div class="form-group">
+        <label asp-for="Images" class="control-label"></label>
+        <input asp-for="Images" type="file" multiple class="form-control-file" />
+    </div>
+    <p>Путь сохранения файла: @ViewBag.FilePath</p>
+
+    <br></br> *@
+    <div class="form-group">
+        <label asp-for="Product.Price"></label>
+        <input asp-for="Product.Price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.IsFavorite"></label>
+        <input asp-for="Product.IsFavorite" type="checkbox" class="form-check-input" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.IsAvailible"></label>
+        <input asp-for="Product.IsAvailible" type="checkbox" class="form-check-input" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.CategoryId"></label>
+        <input asp-for="Product.CategoryId" class="form-control" />
+    </div>
+
+    @if (ViewBag.ErrorMessages != null && ViewBag.ErrorMessages.Count > 0)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewBag.ErrorMessages)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </div>
+    }
+    <!-- Добавьте другие поля для товара -->
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <button type="submit" class="btn btn-primary">Добавить товар</button>
+</form>

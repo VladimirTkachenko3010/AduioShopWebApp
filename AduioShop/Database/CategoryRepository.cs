@@ -13,5 +13,32 @@ namespace AudioShop.Database
         }
 
         public IEnumerable<Category> AllCategories => audioShopDBContext.Category;
+
+        public Category GetCategoryById(int id)
+        {
+            return audioShopDBContext.Category.Find(id);
+        }
+
+        public void AddCategory(Category category)
+        {
+            audioShopDBContext.Category.Add(category);
+            audioShopDBContext.SaveChanges();
+        }
+
+        public void UpdateCategory(Category category)
+        {
+            audioShopDBContext.Category.Update(category);
+            audioShopDBContext.SaveChanges();
+        }
+
+        public void DeleteCategory(int id)
+        {
+            var category = GetCategoryById(id);
+            if (category != null)
+            {
+                audioShopDBContext.Category.Remove(category);
+                audioShopDBContext.SaveChanges();
+            }
+        }
     }
 }

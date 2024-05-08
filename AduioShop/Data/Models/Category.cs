@@ -1,4 +1,6 @@
-﻿namespace AudioShop.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AudioShop.Data.Models
 {
     public class Category
     {
@@ -6,6 +8,7 @@
         /// CategoryId
         /// </summary>
         public int Id { get; set; }
+        [Required(ErrorMessage = "Product Type is required")]
         /// <summary>
         /// Category for product type
         /// </summary>
@@ -23,8 +26,10 @@
         {
             ProductType = productType;
             Description = description;
+        }
+        public Category()
+        {
             
         }
-
     }
 }
