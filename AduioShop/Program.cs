@@ -63,6 +63,7 @@ namespace AudioShop
             //services.AddScoped<IAllProducts, ProductRepository>();
             services.AddTransient<IProductsCategory, CategoryRepository>();
             services.AddTransient<IAllOrders, OrdersRepository>();
+            services.AddScoped<ProductImagesRepository>();
 
             services.AddControllersWithViews();
 

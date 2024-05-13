@@ -19,6 +19,8 @@ namespace AudioShop.Database
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<User> AspNetUsers { get; set; }
+        public DbSet<ProductImages> ProductImages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

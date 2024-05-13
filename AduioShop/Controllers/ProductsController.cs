@@ -2,8 +2,10 @@
 using AudioShop.Data.Models;
 using AudioShop.Database;
 using AudioShop.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
 namespace AudioShop.Controllers
@@ -12,11 +14,13 @@ namespace AudioShop.Controllers
     {
         private readonly IAllProducts allProducts;
         private readonly IProductsCategory productsCategory;
+        private readonly ProductImagesRepository _productImagesRepository;
 
-        public ProductsController(IAllProducts allProducts, IProductsCategory productsCategory)
+        public ProductsController(IAllProducts allProducts, IProductsCategory productsCategory, ProductImagesRepository productImagesRepository)
         {
             this.allProducts = allProducts;
             this.productsCategory = productsCategory;
+            _productImagesRepository = productImagesRepository;
         }
 
         public IActionResult GetSearch(string searchTerm)
@@ -71,7 +75,6 @@ namespace AudioShop.Controllers
         public IActionResult ProductDetails(int id)
         {
             var product = allProducts.getObjectProduct(id);
-
             if (product == null)
             {
                 ViewBag.ErrorMessage = "Товар не найден";
@@ -80,15 +83,20 @@ namespace AudioShop.Controllers
             else
             {
                 var imgFolder = "img"; 
-                var imgPath = Path.Combine(imgFolder, product.ProductType); 
+                var imgPath = Path.Combine(imgFolder, product.ProductType, product.Name); 
                 string[] productFiles = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imgPath), $"{product.Name}-*.jpg");
                 if (productFiles != null)
                 {
-                    product.ImageUrls = productFiles.Select(file => $"/{imgPath}/{Path.GetFileName(file)}").ToList();
+                    var productImages = _productImagesRepository.GetProductImagesByProductId(id);
+                    product.ImageUrls = productImages.Select(pi => new ProductImages
+                    {
+                        Name = pi.Name,
+                        ImageUrls = $"/{imgPath}/{Path.GetFileName(pi.Name)}" 
+                    }).ToList();
                 }
                 else
                 {
-                    product.ImageUrls = new List<string>();
+                    product.ImageUrls = new List<ProductImages>();
                 }
             }
             return View(product); 

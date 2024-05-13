@@ -15,7 +15,7 @@
                     {
                         var activeClass = i == 0 ? "active" : ""; 
                         <div class="carousel-item @activeClass">
-                            <img src="@Url.Content(Model.ImageUrls[i])" class="d-block w-100" alt="Slide @(i+1)">
+                            <img src="@Url.Content(Model.ImageUrls[i].ImageUrls)" class="d-block w-100" alt="Slide @(i+1)">
                         </div>
                     }
                 </div>
@@ -37,6 +37,7 @@
             <p>No images available for this product.</p>
         }
     </div>
+
     <div class="col-lg-6">
         <div>
             <p><strong>Категория:</strong> @Model.ProductType</p>

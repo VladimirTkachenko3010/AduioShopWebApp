@@ -23,7 +23,7 @@ namespace AudioShop.Data.Models
         [NotMapped]
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
-        public List<string>? ImageUrls { get; set; }
+        public virtual List<ProductImages> ImageUrls { get; set; }
 
 
         public int CategoryId { get; set; } // Foreign key property
@@ -36,7 +36,7 @@ namespace AudioShop.Data.Models
         }
 
         public Product(int id, string productType, string brand, string name, string description,
-            string shortDesc, string img, int price, bool isFavorite, bool isAvailible, int categoryId, Category category)  
+            string shortDesc, string img, int price, bool isFavorite, bool isAvailible, List<ProductImages> imageUrls, int categoryId, Category category)  
         {
             Id = id;
             ProductType = productType;
@@ -49,12 +49,14 @@ namespace AudioShop.Data.Models
             IsFavorite = isFavorite;
             IsAvailible = isAvailible;
             CategoryId = categoryId;
-            Category = category;
+            Category = category; 
+            ImageUrls = imageUrls;
+
             //SearchTerm = searchTerm;
         }
 
         public Product(string productType, string brand, string name, string description,
-           string shortDesc, string img, int price, bool isFavorite, bool isAvailible, int categoryId, Category category)
+           string shortDesc, string img, int price, bool isFavorite, bool isAvailible, List<ProductImages> imageUrls, int categoryId, Category category)
         {
             ProductType = productType;
             Brand = brand;
@@ -67,6 +69,7 @@ namespace AudioShop.Data.Models
             IsAvailible = isAvailible;
             CategoryId = categoryId;
             Category = category;
+            ImageUrls = imageUrls;
             //SearchTerm = searchTerm;
         }
     }
