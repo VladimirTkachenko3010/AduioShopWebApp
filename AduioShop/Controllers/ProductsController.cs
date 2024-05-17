@@ -82,22 +82,39 @@ namespace AudioShop.Controllers
             }
             else
             {
-                var imgFolder = "img"; 
-                var imgPath = Path.Combine(imgFolder, product.ProductType, product.Name); 
-                string[] productFiles = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imgPath), $"{product.Name}-*.jpg");
-                if (productFiles != null)
+                var productImages = _productImagesRepository.GetProductImagesByProductId(id);
+                product.ImageUrls = productImages.Select(pi => new ProductImages
                 {
-                    var productImages = _productImagesRepository.GetProductImagesByProductId(id);
-                    product.ImageUrls = productImages.Select(pi => new ProductImages
-                    {
-                        Name = pi.Name,
-                        ImageUrls = $"/{imgPath}/{Path.GetFileName(pi.Name)}" 
-                    }).ToList();
-                }
-                else
-                {
-                    product.ImageUrls = new List<ProductImages>();
-                }
+                    Name = pi.Name,
+                    ImageUrls = $"/img/{product.ProductType}/{product.Name}/{pi.Name}"
+                }).ToList();
+
+                //var productImages = _productImagesRepository.GetProductImagesByProductId(id);
+                //product.ImageUrls = productImages.Select(pi => new ProductImages
+                //{
+                //    Name = pi.Name,
+                //    ImageUrls = $"/img/{product.ProductType}/{product.Name}/{pi.Name}"
+                //}).ToList();
+
+
+
+
+                //var imgFolder = "img"; 
+                //var imgPath = Path.Combine(imgFolder, product.ProductType, product.Name); 
+                //string[] productFiles = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imgPath), $"{product.Name}-*.jpg");
+                //if (productFiles != null)
+                //{
+                //    var productImages = _productImagesRepository.GetProductImagesByProductId(id);
+                //    product.ImageUrls = productImages.Select(pi => new ProductImages
+                //    {
+                //        Name = pi.Name,
+                //        ImageUrls = $"/{imgPath}/{Path.GetFileName(pi.Name)}" 
+                //    }).ToList();
+                //}
+                //else
+                //{
+                //    product.ImageUrls = new List<ProductImages>();
+                //}
             }
             return View(product); 
         }

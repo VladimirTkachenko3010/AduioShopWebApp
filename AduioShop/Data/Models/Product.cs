@@ -23,9 +23,7 @@ namespace AudioShop.Data.Models
         [NotMapped]
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
-        public virtual List<ProductImages> ImageUrls { get; set; }
-
-
+        public List<ProductImages> ImageUrls { get; set; }
         public int CategoryId { get; set; } // Foreign key property
         [BindNever]
         public virtual Category Category { get; set; }  // Navigation property

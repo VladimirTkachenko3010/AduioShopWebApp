@@ -5,7 +5,7 @@ using AudioShop.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System.Linq;
 
 namespace AudioShop.Controllers
 {
@@ -130,7 +130,6 @@ namespace AudioShop.Controllers
             ModelState.Remove("Product.SearchTerm");
             ModelState.Remove("Product.ImageUrls");
 
-
             if (ModelState.IsValid)
             {
                 var product = new Product
@@ -201,117 +200,175 @@ namespace AudioShop.Controllers
             return View(model);
         }
 
-        //// GET: Admin/EditProduct/{id}
-        //public async Task<IActionResult> EditProduct(int id)
-        //{
-        //    var product = await _allProducts.getObjectProductAsync(id);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Admin/EditProduct/{id}
+        public async Task<IActionResult> EditProduct(int id)
+        {
+            var product = await _allProducts.getObjectProductAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var productImages = _productImagesRepository.GetProductImagesByProductId(id);
 
-        //    var model = new ProductEditViewModel
-        //    {
-        //        Product = product,
-        //        CategoriesList = _categoryService.AllCategories.ToList()
-        //    };
-        //    return View(model);
-        //}
+            product.ImageUrls = productImages.Select(pi => new ProductImages
+            {
+                Name = pi.Name,
+                ImageUrls = $"/{Path.Combine("img", product.ProductType, product.Name)}/{Path.GetFileName(pi.Name)}"
+            }).ToList();
+            var model = new ProductEditViewModel
+            {
+                Product = product,
+                DeletedImageUrls = new List<bool>(),
+                CategoriesList = _categoryService.AllCategories.ToList()
+            };
 
-        //// POST: Admin/EditProduct
-        //[HttpPost]
-        //public async Task<IActionResult> EditProduct(ProductEditViewModel model)
-        //{
-        //    ModelState.Remove("CategoriesList");
-        //    ModelState.Remove("Product.Category");
-        //    ModelState.Remove("Product.SearchTerm");
-        //    ModelState.Remove("Images");
-        //    ModelState.Remove("ImageUrls");
+            return View(model);
+        }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        var product = new Product
-        //        {
-        //            Id = model.Product.Id, // Important: Include the Id when updating
-        //            ProductType = model.Product.ProductType,
-        //            Brand = model.Product.Brand,
-        //            Name = model.Product.Name,
-        //            Description = model.Product.Description,
-        //            ShortDesc = model.Product.ShortDesc,
-        //            Img = model.Product.Img,
-        //            Price = model.Product.Price,
-        //            IsFavorite = model.Product.IsFavorite,
-        //            IsAvailible = model.Product.IsAvailible,
-        //            CategoryId = model.Product.CategoryId,
-        //            Category = model.Product.Category,
-        //            ImageUrls = model.Product.ImageUrls
-        //        };
-        //        #region ToDo slider photo
+        // POST: Admin/EditProduct
+        [HttpPost]
+        public async Task<IActionResult> EditProduct(ProductEditViewModel model, [FromForm] List<string> DeletedImageUrls)
+        {
+            #region removes
+            ModelState.Remove("DeletedImageUrls");
+            ModelState.Remove("CategoriesList");
+            ModelState.Remove("Product.Category");
+            ModelState.Remove("Product.SearchTerm");
+            ModelState.Remove("Product.SearchTerm");
+            ModelState.Remove("Product.ImageUrls");
+            ModelState.Remove("Images");
 
-        //        // Удаление изображений, если выбраны чекбоксы для удаления
-        //        for (int i = model.DeletedImageUrls.Count - 1; i >= 0; i--)
-        //        {
-        //            if (model.DeletedImageUrls[i])
-        //            {
-        //                // Удаляем из списка ImageUrls и из файловой системы
-        //                if (i < model.Product.ImageUrls.Count)
-        //                {
-        //                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, model.Product.ImageUrls[i].TrimStart('/'));
-        //                    if (System.IO.File.Exists(imagePath))
-        //                    {
-        //                        System.IO.File.Delete(imagePath);
-        //                    }
-        //                    model.Product.ImageUrls.RemoveAt(i);
-        //                }
-        //            }
-        //        }
+            #endregion
 
-        //        // Загрузка новых изображений
-        //        if (model.NewImages != null && model.NewImages.Count > 0)
-        //        {
-        //            foreach (var image in model.NewImages)
-        //            {
-        //                if (image != null && image.Length > 0)
-        //                {
-        //                    // Генерируем уникальное имя для файла
-        //                    var fileName = $"{model.Product.Name}-{model.Images.IndexOf(image) + 1}.jpg";
+            if (ModelState.IsValid)
+            {
+                var product = new Product
+                {
+                    Id = model.Product.Id,
+                    ProductType = model.Product.ProductType,
+                    Brand = model.Product.Brand,
+                    Name = model.Product.Name,
+                    Description = model.Product.Description,
+                    ShortDesc = model.Product.ShortDesc,
+                    Img = model.Product.Img,
+                    Price = model.Product.Price,
+                    IsFavorite = model.Product.IsFavorite,
+                    IsAvailible = model.Product.IsAvailible,
+                    CategoryId = model.Product.CategoryId,
+                    Category = model.Product.Category,
+                    ImageUrls = model.Product.ImageUrls
+                };
 
-        //                    // Путь сохранения файла в папке товара
-        //                    var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "img", $"{model.Product.ProductType}", model.Product.Name);
-        //                    if (!Directory.Exists(folderPath))
-        //                    {
-        //                        Directory.CreateDirectory(folderPath);
-        //                    }
+                if (DeletedImageUrls != null)
+                {
 
-        //                    var filePath = Path.Combine(folderPath, fileName);
+                    DeletedImageUrls = DeletedImageUrls.Select(url => url.Replace("\\", "/")).ToList();
+                    Console.WriteLine("DeletedImageUrls:");
+                    foreach (var url in DeletedImageUrls)
+                    {
+                        Console.WriteLine(url);
+                    }
+                    await DeleteSelectedImages(model, product, DeletedImageUrls);
+                }
 
-        //                    // Сохраняем файл
-        //                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //                    {
-        //                        await image.CopyToAsync(fileStream);
-        //                    }
+                if (model.Images != null && model.Images.Count > 0)
+                {
+                    await SaveProductImagesAsync(model, product, DeletedImageUrls);
+                }
 
-        //                    // Добавляем путь к фото в модель продукта
-        //                    model.Product.ImageUrls.Add($"/img/{model.Product.ProductType}/{model.Product.Name}/{fileName}");
-        //                }
-        //            }
-        //        }
+                await _allProducts.UpdateProductAsync(product);
 
-        //        #endregion
+                return RedirectToAction("Catalog", "Products");
+            }
+
+            ViewBag.ErrorMessages = ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage)
+                .ToList();
+            return View(model);
+        }
 
 
-        //        await _allProducts.UpdateProductAsync(product);
-        //        return RedirectToAction("Catalog", "Products");
-        //    }
+        private async Task SaveProductImagesAsync(ProductEditViewModel model, Product product, List<string> deletedImageUrls)
+        {
+            var productImages = new List<ProductImages>();
+            var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "img", model.Product.ProductType, model.Product.Name);
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            int deletedIndex = 0;
+            foreach (var image in model.Images)
+            {
+                if (image != null && image.Length > 0)
+                {
+                    string fileName;
+                    if (deletedIndex < deletedImageUrls.Count)
+                    {
+                        var deletedUrl = deletedImageUrls[deletedIndex];
+                        fileName = Path.GetFileName(deletedUrl);
+                        deletedIndex++;
+                    }
+                    else
+                    {
+                        fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                    }
+                    var filePath = Path.Combine(folderPath, fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await image.CopyToAsync(fileStream);
+                    }
+                    var imageUrl = $"/img/{model.Product.ProductType}/{model.Product.Name}/{fileName}".Replace("\\", "/");
+
+                    productImages.Add(new ProductImages
+                    {
+                        ImageUrls = imageUrl,
+                        ProductId = product.Id,
+                        Name = fileName,
+                    });
+                }
+            }
+
+            _productImagesRepository.AddListProductImages(productImages);
+        }
+
+        private async Task DeleteSelectedImages(ProductEditViewModel productViewModel, Product product, List<string> deletedImageUrls)
+        {
+            if (deletedImageUrls == null || !deletedImageUrls.Any())
+                return;
+
+            var productImages = _productImagesRepository.GetProductImagesByProductId(productViewModel.Product.Id);
+
+            var imagesToDelete = productImages
+               .Where(img => deletedImageUrls.Contains(img.ImageUrls.Replace("\\", "/")))
+               .ToList();
+
+            foreach (var imageToDelete in imagesToDelete)
+            {
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, imageToDelete.ImageUrls.TrimStart('/'));
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+                _productImagesRepository.DeleteProductImage(imageToDelete);
+                //product.ImageUrls.Remove(imageToDelete);
+            }
+
+            var updatedProductImages = _productImagesRepository.GetProductImagesByProductId(productViewModel.Product.Id);
+            product.ImageUrls = updatedProductImages.Select(pi => new ProductImages
+            {
+                Name = pi.Name,
+                ImageUrls = $"/img/{product.ProductType}/{product.Name}/{pi.Name}".Replace("\\", "/"),
+                ProductId = product.Id
+            }).ToList();
+
+            _productImagesRepository.UpdateProductImages(product, product.ImageUrls);
+        }
 
 
-        //    ViewBag.ErrorMessages = ModelState.Values
-        //        .SelectMany(v => v.Errors)
-        //        .Select(e => e.ErrorMessage)
-        //        .ToList();
-
-        //    return View(model);
-        //}
         // GET: Admin/DeleteProduct/{id}
         public async Task<IActionResult> DeleteProduct(int id)
         {
