@@ -313,7 +313,9 @@ namespace AudioShop.Controllers
                     }
                     else
                     {
-                        fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                        var imageDirectoryPath = Path.Combine("wwwroot", "img", product.ProductType, product.Name);
+                        var existingFiles = Directory.GetFiles(imageDirectoryPath, "*.jpg");
+                        fileName = $"{model.Product.Name}-{existingFiles.Length + 1}.jpg";
                     }
                     var filePath = Path.Combine(folderPath, fileName);
 
