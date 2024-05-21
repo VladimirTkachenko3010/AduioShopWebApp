@@ -20,12 +20,10 @@ namespace AudioShop.Controllers
         {
             var items = _cart.GetCartItems();
             _cart.CartItems = items;
-
             var obj = new CartViewModel
             {
                 Cart = _cart,
             };
-
             return View(obj);
         }
 
@@ -37,7 +35,6 @@ namespace AudioShop.Controllers
             {
                 _cart.AddToCart(item);
             }
-
             return RedirectToAction("Index");
 
         }
@@ -55,6 +52,5 @@ namespace AudioShop.Controllers
             _cart.UpdateCartItemQuantity(productId, quantity);
             return RedirectToAction("Index");
         }
-
     }
 }

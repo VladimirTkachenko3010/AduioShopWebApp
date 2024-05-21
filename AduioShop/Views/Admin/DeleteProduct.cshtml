@@ -1,5 +1,55 @@
 ﻿@model AudioShop.ViewModels.ProductEditViewModel
 
+@{
+    ViewData["Title"] = "Видалення продукту";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center text-danger">Видалення продукту</h2>
+            <form asp-action="DeleteProduct" method="post">
+                <div class="form-group">
+                    <label asp-for="Product.Id" class="control-label">ID продукту</label>
+                    <input asp-for="Product.Id" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.Name" class="control-label">Назва</label>
+                    <input asp-for="Product.Name" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.Description" class="control-label">Опис</label>
+                    <textarea asp-for="Product.Description" class="form-control" readonly></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-danger btn-block">Видалити продукт</button>
+            </form>
+
+            @if (ViewBag.ErrorMessages != null && ViewBag.ErrorMessages.Count > 0)
+            {
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        @foreach (var error in ViewBag.ErrorMessages)
+                        {
+                            <li>@error</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@* @model AudioShop.ViewModels.ProductEditViewModel
+
 <h2>Удаление продукта</h2>
 
 <form asp-action="DeleteProduct" method="post">
@@ -18,3 +68,4 @@
 
     <button type="submit" class="btn btn-danger">Удалить продукт</button>
 </form>
+ *@

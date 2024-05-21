@@ -126,6 +126,7 @@ namespace AudioShop.Controllers
         public async Task<IActionResult> AddProductAsync(ProductEditViewModel model)
         {
             ModelState.Remove("CategoriesList");
+            ModelState.Remove("DeletedImageUrls");
             ModelState.Remove("Product.Category");
             ModelState.Remove("Product.SearchTerm");
             ModelState.Remove("Product.ImageUrls");
@@ -145,7 +146,6 @@ namespace AudioShop.Controllers
                     IsAvailible = model.Product.IsAvailible,
                     CategoryId = model.Product.CategoryId,
                     Category = model.Product.Category,
-                    //ImageUrls = model.Product.ImageUrls
                 };
 
                 _allProducts.AddProduct(product);
@@ -392,7 +392,6 @@ namespace AudioShop.Controllers
         {
             try
             {
-                // Retrieve the product from the database
                 var productToDelete = await _allProducts.getObjectProductAsync(model.Product.Id);
 
                 if (productToDelete == null)
@@ -400,14 +399,12 @@ namespace AudioShop.Controllers
                     return NotFound();
                 }
 
-                // Delete the product from the database
                 await _allProducts.DeleteProductAsync(productToDelete);
 
                 return RedirectToAction("Catalog", "Products");
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that may occur during deletion
                 ViewBag.ErrorMessages = new List<string> { ex.Message };
                 return RedirectToAction("Catalog", "Products");
             }

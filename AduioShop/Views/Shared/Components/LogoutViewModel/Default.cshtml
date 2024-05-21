@@ -1,11 +1,23 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
+    <div class="btn-group float-end" style="width: 650px;">
+        <a class="navbar-brand">@User.Identity.Name в системі</a>
+        <form method="post" asp-controller="Account" asp-action="Logout" id="logoutform" asp-antiforgery="true" class="d-inline">
+            <input type="submit" value="Вихід" class="btn btn-link" />
+        </form>
+    </div>
+}
+
+
+
+
+
+@* @if (User.Identity.IsAuthenticated)
+{
 <div class="btn-group pull-right" style="width: 650px;">
-    @* <a class="navbar-brand" href="/Home/Add">Добавить автомобиль</a> *@
     <a class="navbar-brand" herf="#">@User.Identity.Name в системе    </a>
     <form method="post" asp-controller="Account" asp-action="Logout" id="logoutform" asp-antiforgery="true">
         <input type="submit" value="Выход"/>
-        @* <a class="navbar-brand" href="#" onclick="document.getElementById('logoutform').submit()">Выход</a> *@
     </form>
 </div>
 }
@@ -15,4 +27,4 @@ else
         <a class="navbar-brand" href="/Account/Login">Login</a>
         <a class="navbar-brand" href="/Account/Register">Register </a>
     </div>
-}
+} *@

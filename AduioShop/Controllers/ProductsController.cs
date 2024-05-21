@@ -68,7 +68,7 @@ namespace AudioShop.Controllers
                 currentCategory = currentCategory
             };
             ViewBag.Title = "Headphones page";
-            return View("Catalog", productObj);
+            return View(productObj);
         }
 
 
@@ -77,7 +77,7 @@ namespace AudioShop.Controllers
             var product = allProducts.getObjectProduct(id);
             if (product == null)
             {
-                ViewBag.ErrorMessage = "Товар не найден";
+                ViewBag.ErrorMessage = "Товар не знайдено";
                 return View("Error"); 
             }
             else

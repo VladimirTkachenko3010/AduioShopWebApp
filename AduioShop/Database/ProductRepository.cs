@@ -23,7 +23,8 @@ namespace AudioShop.Database
             {
                 return Products;
             }
-            return Products.Where(e => e.Name.Contains(searchTerm));
+            return Products.Where(e => e.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                                     || e.Brand.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
         }
 
         public Product getObjectProduct(int productId) => audioShopDBContext.Product.FirstOrDefault(p => p.Id == productId);

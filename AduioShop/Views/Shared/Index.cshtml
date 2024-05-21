@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@*<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -9,19 +9,12 @@
 <body>
     <header class="p-3 text-bg-dark">
         <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
                         <use xlink:href="#bootstrap"></use>
                     </svg>
                 </a>
-
-                @if (User.IsInRole("Admin"))
-                {
-                    <div class="admin-panel-button">
-                        <button type="button" class="btn btn-danger" onclick="window.location.href = '@Url.Action("AdminPanel", "Admin")'">Адмін-панель</button>
-                    </div>
-                }
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a asp-controller="Home" asp-action="Index" class="nav-link px-2 text-secondary">Головна</a></li>
@@ -41,13 +34,18 @@
                     <button type="button" class="btn btn-warning" onclick="window.location.href = '@Url.Action("Login", "Account")'">Увійти</button>
                 </div>
 
-                <div class="logout-container">
-                    @await Component.InvokeAsync("LogoutViewModel")
-                </div>
+                <nav class="container">
+                    <div> @await Component.InvokeAsync("LogoutViewModel") </div>
+                </nav>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <button type="button" class="btn btn-danger ms-3" onclick="window.location.href = '@Url.Action("AdminPanel", "Admin")'">Адмін-панель</button>
+                }
+
             </div>
         </div>
     </header>
-
     <div class="container mt-3">
         @RenderBody()
         @RenderSection("Scripts", false)
@@ -65,3 +63,97 @@
     <script src="~/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+body {
+    background: cyan
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.25rem;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+/* Добавим стили для header */
+header {
+    background-color: #343a40; /* Изменяем цвет фона */
+    padding: 15px 0; /* Добавляем отступы сверху и снизу */
+}
+
+/* Изменяем стили для ссылок в меню */
+.nav-link {
+    color: #ffffff; /* Изменяем цвет текста */
+    font-weight: bold; /* Делаем текст жирным */
+}
+
+/* Стили для кнопок в header */
+.btn-outline-light, .btn-warning {
+    margin-left: 10px; /* Добавляем небольшой отступ между кнопками */
+}
+
+/* Добавляем стили для формы поиска */
+.form-control-dark {
+    background-color: #343a40; /* Изменяем цвет фона */
+    border-color: #ffffff; /* Изменяем цвет рамки */
+    color: #ffffff; /* Изменяем цвет текста */
+}
+
+/* Изменяем стили для footer */
+footer {
+    background-color: #f8f9fa; /* Изменяем цвет фона */
+    padding: 20px 0; /* Добавляем отступы сверху и снизу */
+    border-top: 1px solid #dee2e6; /* Добавляем горизонтальную линию вверху */
+}
+
+/* Стили для ссылок в footer */
+.text-body-secondary {
+    color: #6c757d; /* Изменяем цвет текста */
+    font-size: 14px; /* Изменяем размер шрифта */
+}
+
+
+
+
+
+
+ *@
+ /* Форма поиска */
+    header form {
+        display: flex;
+        margin-right: 15px;
+    }
+
+        header form .form-control {
+            margin-right: 5px;
+        }
+
+    /* Кнопка админ-панели */
+    header .btn-admin {
+        margin-top: 10px; /* Отступ сверху */
+        padding: 0.375rem 0.75rem; /* Размер кнопки */
+    }
+
+    /* Центрирование блока LogoutViewModel */
+    header .logout-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }

@@ -1,5 +1,79 @@
 ﻿@model UserRegistration
 
+@{
+    ViewData["Title"] = "Реєстрація";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Реєстрація</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Register" asp-antiforgery="true">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="form-group mb-3">
+                            <input asp-for="LoginProp" class="form-control" placeholder="Логін" />
+                            <span asp-validation-for="LoginProp" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input asp-for="Name" class="form-control" placeholder="Ім'я" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input asp-for="Surname" class="form-control" placeholder="Прізвище" />
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input asp-for="Email" class="form-control" placeholder="Електронна пошта" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input asp-for="Password" class="form-control" placeholder="Пароль" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Підтвердіть пароль" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Зареєструватися</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate.unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+
+
+
+
+
+
+
+
+
+@* 
+@model UserRegistration
+
 
 @{
     ViewData["Title"] = "Регистрация";
@@ -48,7 +122,7 @@
                         <input asp-for="ConfirmPassword" class="form-control" placeholder="Продублируйте пароль" />
                     </div>
                 </div>
-                @* @Html.ValidationSummary(true, "", new { @class = "text-danger" })  *@
+                @* @Html.ValidationSummary(true, "", new { @class = "text-danger" })  
 
                 <div class="text-center col-xs-12">
                     <button type="submit" class="btn btn-default">Зарегистрироваться</button>
@@ -58,3 +132,4 @@
         </div>
     </div>
 </div>
+ *@

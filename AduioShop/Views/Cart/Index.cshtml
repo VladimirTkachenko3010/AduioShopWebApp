@@ -1,5 +1,43 @@
 ﻿@model CartViewModel
 
+<div class="container">
+    @foreach (var el in Model.Cart.CartItems)
+    {
+        <div class="alert alert-warning mt-3">
+            <b>Назва продукту: </b> @el.Product.Name<br />
+            <b>Ціна продукту: </b> @el.Product.Price.ToString("c")<br />
+            <b>Кількість: </b>
+            <form asp-controller="Cart" asp-action="UpdateQuantity" method="post" class="d-inline">
+                <input type="hidden" name="productId" value="@el.Product.Id" />
+                <input type="number" name="quantity" value="@el.Quantity" min="1" max="100" onchange="this.form.submit()" class="form-control d-inline-block w-auto">
+            </form>
+            <form asp-controller="Cart" asp-action="RemoveFromCart" method="post" class="d-inline">
+                <input type="hidden" name="productId" value="@el.Product.Id" />
+                <button type="submit" class="btn btn-danger btn-sm">Видалити з кошика</button>
+            </form>
+            <div>
+                <b>Сума:</b> @(el.Quantity * el.Product.Price)
+            </div>
+        </div>
+    }
+
+    <div class="mt-3">
+        <b>Загальна сума кошика:</b> @Model.Cart.CartItems.Sum(item => item.Product.Price * item.Quantity).ToString("c")
+        <hr />
+        <a class="btn btn-danger" asp-controller="Order" asp-action="Checkout">Оплатити</a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@* 
+@model CartViewModel
+
 <div class="container" >
     @foreach(var el in Model.Cart.CartItems)
     {
@@ -25,4 +63,4 @@
         <b>Общая сумма корзины:</b> @Model.Cart.CartItems.Sum(item => item.Product.Price * item.Quantity).ToString("c")
         <hr />
     <a class="btn btn-danger" asp-controller="Order" asp-action="Checkout">Оплатить</a>
-</div>
+</div> *@

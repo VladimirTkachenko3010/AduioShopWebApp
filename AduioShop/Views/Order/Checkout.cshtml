@@ -1,6 +1,68 @@
 ﻿@model Order
 
 <div class="row">
+    <h3>Оформлення замовлення</h3>
+    <form asp-action="Checkout" method="post" class="form-horizontal">
+        <div class="form-group row">
+            <label asp-for="Name" class="col-md-2 col-form-label"></label>
+            <div class="col-md-5">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Surname" class="col-md-2 col-form-label"></label>
+            <div class="col-md-5">
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Address" class="col-md-2 col-form-label"></label>
+            <div class="col-md-5">
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Phone" class="col-md-2 col-form-label"></label>
+            <div class="col-md-5">
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Email" class="col-md-2 col-form-label"></label>
+            <div class="col-md-5">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-7">
+                <button type="submit" class="btn btn-success float-end">Завершити замовлення</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate.unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+
+
+
+
+
+@* 
+@model Order
+
+<div class="row">
     <h3> Оформлення замовлення</h3>
     <form asp-action="Checkout" method="post" class="form-horizontal">
         <div class="form-group">
@@ -45,3 +107,4 @@
 
 </div>
 
+ *@

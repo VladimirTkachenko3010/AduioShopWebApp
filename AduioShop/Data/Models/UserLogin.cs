@@ -5,12 +5,12 @@ namespace AudioShop.Data.Models
 {
     public class UserLogin
     {
-        [Required, MaxLength(40)]
+        [Required(ErrorMessage = "Логін обов'язковий"), MaxLength(40)]
         public string LoginProp { get; set; }
-        [Required, DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "Електронна пошта обов'язкова"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required, DataType(DataType.Password)]
+        [Required(ErrorMessage = "Пароль обов'язковий"), DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }

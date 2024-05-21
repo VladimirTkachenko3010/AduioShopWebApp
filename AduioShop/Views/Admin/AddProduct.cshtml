@@ -1,5 +1,97 @@
 ﻿@model AudioShop.ViewModels.ProductEditViewModel
 
+@{
+    ViewData["Title"] = "Додати товар";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center">Додати товар</h2>
+            <form asp-controller="Admin" asp-action="AddProduct" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Product.ProductType" class="control-label"></label>
+                    <input asp-for="Product.ProductType" class="form-control" />
+                    <span asp-validation-for="Product.ProductType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.Brand" class="control-label"></label>
+                    <input asp-for="Product.Brand" class="form-control" />
+                    <span asp-validation-for="Product.Brand" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.Name" class="control-label"></label>
+                    <input asp-for="Product.Name" class="form-control" />
+                    <span asp-validation-for="Product.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.Description" class="control-label"></label>
+                    <textarea asp-for="Product.Description" class="form-control"></textarea>
+                    <span asp-validation-for="Product.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.ShortDesc" class="control-label"></label>
+                    <input asp-for="Product.ShortDesc" class="form-control" />
+                    <span asp-validation-for="Product.ShortDesc" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.Img" class="control-label"></label>
+                    <input asp-for="Product.Img" class="form-control" />
+                    <span asp-validation-for="Product.Img" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.Price" class="control-label"></label>
+                    <input asp-for="Product.Price" class="form-control" />
+                    <span asp-validation-for="Product.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <input asp-for="Product.IsFavorite" type="checkbox" class="form-check-input" />
+                    <label asp-for="Product.IsFavorite" class="form-check-label"></label>
+                </div>
+                <div class="form-group form-check">
+                    <input asp-for="Product.IsAvailible" type="checkbox" class="form-check-input" />
+                    <label asp-for="Product.IsAvailible" class="form-check-label"></label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product.CategoryId" class="control-label"></label>
+                    <input asp-for="Product.CategoryId" class="form-control"/>
+                    <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Images" class="control-label"></label>
+                    <input asp-for="Images" type="file" multiple class="form-control-file" />
+                </div>
+
+                @if (ViewBag.ErrorMessages != null && ViewBag.ErrorMessages.Count > 0)
+                {
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (var error in ViewBag.ErrorMessages)
+                            {
+                                <li>@error</li>
+                            }
+                        </ul>
+                    </div>
+                }
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <button type="submit" class="btn btn-primary">Додати товар</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+
+@* 
+
+@model AudioShop.ViewModels.ProductEditViewModel
+
 <form asp-controller="Admin" asp-action="AddProduct" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Product.ProductType"></label>
@@ -25,15 +117,6 @@
         <label asp-for="Product.Img"></label>
         <input asp-for="Product.Img" class="form-control" />
     </div>
-    @* <br></br>
-
-    <div class="form-group">
-        <label asp-for="Images" class="control-label"></label>
-        <input asp-for="Images" type="file" multiple class="form-control-file" />
-    </div>
-    <p>Путь сохранения файла: @ViewBag.FilePath</p>
-
-    <br></br> *@
     <div class="form-group">
         <label asp-for="Product.Price"></label>
         <input asp-for="Product.Price" class="form-control" />
@@ -73,3 +156,4 @@
 
     <button type="submit" class="btn btn-primary">Добавить товар</button>
 </form>
+ *@

@@ -25,7 +25,7 @@ namespace AudioShop.Database
                         img: "/img/Headphone/Powerbeats Pro/Powerbeats Pro-1.jpg",
                         price: 6400,
                         isFavorite: true,
-                        isAvailible: false,
+                        isAvailible: true,
                         imageUrls: new List<ProductImages>
                         {
                             new ProductImages {Name = "Powerbeats Pro-1.jpg", ImageUrls = "/img/Headphone/Powerbeats Pro/Powerbeats Pro-1.jpg" },
@@ -46,7 +46,7 @@ namespace AudioShop.Database
                         img: "/img/Headphone/AirPods Max Silver/AirPods Max Silver-1.jpg",
                         price: 21650,
                         isFavorite: false,
-                        isAvailible: false,
+                        isAvailible: true,
                         imageUrls: new List<ProductImages>
                         {
                             new ProductImages {Name = "AirPods Max Silver-1.jpg", ImageUrls = "/img/Headphone/AirPods Max Silver/AirPods Max Silver-1.jpg" },
@@ -67,7 +67,7 @@ namespace AudioShop.Database
                         img: "/img/Headphone/AirPods 3/AirPods 3-1.jpg",
                         price: 5999,
                         isFavorite: false,
-                        isAvailible: false,
+                        isAvailible: true,
                         imageUrls: new List<ProductImages>
                         {
                             new ProductImages {Name = "AirPods 3-1.jpg", ImageUrls = "/img/Headphone/AirPods 3/AirPods 3-1.jpg" },
@@ -88,7 +88,7 @@ namespace AudioShop.Database
                         img: "/img/Speakers/Charge 5/Charge 5-1.jpg",
                         price: 5150,
                         isFavorite: false,
-                        isAvailible: false,
+                        isAvailible: true,
                         imageUrls: new List<ProductImages>
                         {
                             new ProductImages {Name = "Charge 5-1.jpg", ImageUrls = "/img/Speakers/Charge 5/Charge 5-1.jpg" },
@@ -109,7 +109,7 @@ namespace AudioShop.Database
                         img: "/img/Speakers/Charge 4/Charge 4-1.jpg",
                         price: 4250,
                         isFavorite: false,
-                        isAvailible: false,
+                        isAvailible: true,
                         imageUrls: new List<ProductImages>
                         {
                             new ProductImages {Name = "Charge 4-1.jpg", ImageUrls = "/img/Speakers/Charge 4/Charge 4-1.jpg" },
@@ -130,7 +130,7 @@ namespace AudioShop.Database
                         img: "/img/Speakers/Xtreme 2/Xtreme 2-1.jpg",
                         price: 6750,
                         isFavorite: true,
-                        isAvailible: false,
+                        isAvailible: true,
                         imageUrls: new List<ProductImages>
                         {
                             new ProductImages {Name = "Xtreme 2-1.jpg", ImageUrls = "/img/Speakers/Xtreme 2/Xtreme 2-1.jpg" },

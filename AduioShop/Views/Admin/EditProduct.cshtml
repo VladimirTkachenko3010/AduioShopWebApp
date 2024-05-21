@@ -1,5 +1,115 @@
 ﻿@model AudioShop.ViewModels.ProductEditViewModel
 
+@{
+    ViewData["Title"] = "Редагувати товар";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center">Редагувати товар</h2>
+            <form asp-action="EditProduct" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Product.Id" />
+
+                <div class="form-group">
+                    <label asp-for="Product.ProductType" class="control-label">Тип продукту</label>
+                    <input asp-for="Product.ProductType" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Product.Brand" class="control-label">Бренд</label>
+                    <input asp-for="Product.Brand" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Product.Name" class="control-label">Назва</label>
+                    <input asp-for="Product.Name" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Product.Description" class="control-label">Опис</label>
+                    <textarea asp-for="Product.Description" class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Product.ShortDesc" class="control-label">Короткий опис</label>
+                    <input asp-for="Product.ShortDesc" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Product.Img" class="control-label">Зображення</label>
+                    <input asp-for="Product.Img" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Product.Price" class="control-label">Ціна</label>
+                    <input asp-for="Product.Price" class="form-control" />
+                </div>
+
+                <div class="form-group form-check">
+                    <label asp-for="Product.IsFavorite" class="form-check-label">Обраний</label>
+                    <input asp-for="Product.IsFavorite" type="checkbox" class="form-check-input" />
+                </div>
+
+                <div class="form-group form-check">
+                    <label asp-for="Product.IsAvailible" class="form-check-label">Доступний</label>
+                    <input asp-for="Product.IsAvailible" type="checkbox" class="form-check-input" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Product.CategoryId" class="control-label">Категорія</label>
+                    <input asp-for="Product.CategoryId" class="form-control" />
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Images" class="control-label">Додати фото товару для слайдера:</label>
+                    <input asp-for="Images" type="file" multiple class="form-control-file" />
+                </div>
+
+                @if (Model.Product != null && Model.Product.ImageUrls != null)
+                {
+                    <div class="form-group">
+                        <label>Поточні зображення</label>
+                        @for (int i = 0; i < Model.Product.ImageUrls.Count; i++)
+                        {
+                            <div>
+                                <img src="@Url.Content($"{Model.Product.ImageUrls[i].ImageUrls}?t={DateTime.Now.Ticks}")" alt="Зображення товару" style="max-width: 200px; max-height: 200px;" />
+                                <input type="checkbox" name="DeletedImageUrls" value="@Model.Product.ImageUrls[i].ImageUrls" /> Видалити
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (ViewBag.ErrorMessages != null && ViewBag.ErrorMessages.Count > 0)
+                {
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (var error in ViewBag.ErrorMessages)
+                            {
+                                <li>@error</li>
+                            }
+                        </ul>
+                    </div>
+                }
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@* @model AudioShop.ViewModels.ProductEditViewModel
+
 <form asp-action="EditProduct" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Product.Id"></label>
@@ -86,3 +196,4 @@
 
     <button type="submit" class="btn btn-primary">Сохранить изменения</button>
 </form>
+ *@

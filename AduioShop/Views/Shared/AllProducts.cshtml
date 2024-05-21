@@ -1,15 +1,49 @@
-﻿@using AudioShop.Data.Models
+﻿@model IEnumerable<AudioShop.Data.Models.Product>
 
-<div class=" col-lg-4">
-    <a asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@Model.Id">
-    <img class=" img-thumbnail" src="@Model.Img" alt="@Model.Name" />
-    </a>
-    <a asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@Model.Id">
-        <h2>Модель: @Model.Name</h2>
-    </a>
-    <p>@Model.ShortDesc</p>
-
-    <p>Цена: @Model.Price.ToString("c")</p>
-    <p><a class="btn btn-primary" asp-controller="Products" asp-action="ProductDetails" asp-action="ProductImages" asp-route-Id="@Model.Id">Детальніше</a></p>
-    <p><a class="btn btn-warning" asp-controller="Cart" asp-action="AddToCart" asp-route-Id="@Model.Id">Додати до кошика</a></p>
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <a asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@product.Id">
+                    <img class="card-img-top" src="@product.Img" alt="@product.Name" />
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@product.Id">@product.Name</a>
+                    </h4>
+                    <h5>@product.Brand</h5>
+                    <p class="card-text">@product.ShortDesc</p>
+                    <h5>@product.Price.ToString("c")</h5>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@product.Id">Детальніше</a>
+                    <a class="btn btn-warning" asp-controller="Cart" asp-action="AddToCart" asp-route-Id="@product.Id">Додати до кошика</a>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+
+
+
+
+
+
+        @* 
+            
+        @using AudioShop.Data.Models
+        <div class="col-lg-4 col-md-6 mb-4">
+            <a asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@Model.Id">
+                <img class=" img-thumbnail" src="@Model.Img" alt="@Model.Name" /> @* "@Url.Content($"@{Model.Img}?t={DateTime.Now.Ticks}")" 
+            </a>
+            <a asp-controller="Products" asp-action="ProductDetails" asp-route-Id="@Model.Id">
+                <h2>Модель: @Model.Name</h2>
+            </a>
+            <p>@Model.ShortDesc</p>
+
+            <p>Цена: @Model.Price.ToString("c")</p>
+            <p><a class="btn btn-primary" asp-controller="Products" asp-action="ProductDetails" asp-action="ProductImages" asp-route-Id="@Model.Id">Детальніше</a></p>
+            <p><a class="btn btn-warning" asp-controller="Cart" asp-action="AddToCart" asp-route-Id="@Model.Id">Додати до кошика</a></p>
+        </div>
+ *@

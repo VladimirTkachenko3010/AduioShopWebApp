@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AudioShop.Data.Models
@@ -10,12 +11,20 @@ namespace AudioShop.Data.Models
         /// ProductId
         /// </summary>
         public int Id { get; set; }
-        public string ProductType { get; set; }   //headphones or dynamics, etc
+        [Required(ErrorMessage = "Тип продукту обов'язковий")]
+        public string ProductType { get; set; }
+        [Required(ErrorMessage = "Бренд обов'язковий")]
         public string Brand { get; set; }
+        [Required(ErrorMessage = "Назва обов'язкова")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Опис обов'язковий")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "Короткий опис обов'язковий")]
         public string ShortDesc { get; set; }
+        [Required(ErrorMessage = "Зображення обов'язкове")]
         public string Img { get; set; }
+        [Required(ErrorMessage = "Ціна обов'язкова")]
+        [Range(0.01, int.MaxValue, ErrorMessage = "Ціна повинна бути більшою за нуль")]
         public int Price { get; set; }
         public bool IsFavorite { get; set; }
         public bool IsAvailible { get; set; }
@@ -24,6 +33,7 @@ namespace AudioShop.Data.Models
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
         public List<ProductImages> ImageUrls { get; set; }
+        [Required(ErrorMessage = "Категорія обов'язкова")]
         public int CategoryId { get; set; } // Foreign key property
         [BindNever]
         public virtual Category Category { get; set; }  // Navigation property

@@ -1,4 +1,18 @@
 ﻿@using AudioShop.Data.Models
+@model AudioShop.ViewModels.ProductsListViewModel
+
+<h1> Всі товари:</h1>
+<h3>@Model.currentCategory</h3>
+
+<div class="row mt-5 mb-2">
+    @await Html.PartialAsync("AllProducts", Model.allProducts)
+</div>
+
+
+
+
+
+@* @using AudioShop.Data.Models
 <h1> Все товары:</h1>
 <h3>@Model.currentCategory</h3>
 
@@ -11,3 +25,4 @@
     }
 }
 </div>
+ *@

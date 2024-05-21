@@ -1,4 +1,28 @@
 ﻿@using AudioShop.Data.Models
+@model IEnumerable<AudioShop.Data.Models.Product>
+
+<h1 class="my-4">Результати Пошуку:</h1>
+
+<div class="row">
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <h3 class="text-center">Не знайдено жодного товару за вашим запитом.</h3>
+        </div>
+    }
+    else
+    {
+        @await Html.PartialAsync("AllProducts", Model)
+    }
+</div>
+
+
+
+
+
+
+
+@* @using AudioShop.Data.Models
 
 <h1>Результати Пошуку:</h1>
 
@@ -13,3 +37,4 @@
         }
 
     </div>
+ *@

@@ -1,4 +1,19 @@
-﻿@model HomeViewModel
+﻿@model AudioShop.ViewModels.HomeViewModel
+
+<div class="container">
+    <h1>Популярні товари:</h1>
+    <div class="row mt-5 mb-2">
+        @await Html.PartialAsync("AllProducts", Model.favProducts)
+    </div>
+</div>
+
+
+
+
+
+
+@* 
+@model HomeViewModel
 
 <h1> Популярні товари:</h1>
 
@@ -13,3 +28,4 @@
 
 </div>
 
+ *@

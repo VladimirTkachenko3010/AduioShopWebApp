@@ -58,7 +58,7 @@ namespace AudioShop.Controllers
                     ModelState.AddModelError("", error.ErrorMessage);
                 }
             }
-            ModelState.AddModelError("", "Пользователь не найден");
+            ModelState.AddModelError("", "Користувач не знайдений");
             return View(model);
         }
 
