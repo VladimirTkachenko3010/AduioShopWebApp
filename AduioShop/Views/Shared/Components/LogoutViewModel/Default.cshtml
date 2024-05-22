@@ -1,12 +1,13 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-    <div class="btn-group float-end" style="width: 650px;">
-        <a class="navbar-brand">@User.Identity.Name в системі</a>
+    <div class="btn-group float-start user-info" style="width: 650px;">
+        <a class="navbar-brand user-name">@User.Identity.Name в системі</a>
         <form method="post" asp-controller="Account" asp-action="Logout" id="logoutform" asp-antiforgery="true" class="d-inline">
-            <input type="submit" value="Вихід" class="btn btn-link" />
+            <input type="submit" value="Вихід" class="btn btn-link logout-button" />
         </form>
     </div>
 }
+
 
 
 

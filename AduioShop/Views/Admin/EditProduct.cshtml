@@ -4,7 +4,7 @@
     ViewData["Title"] = "Редагувати товар";
 }
 
-<div class="container mt-5">
+<div class="container edit-product-container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2 class="text-center">Редагувати товар</h2>
@@ -47,19 +47,18 @@
                 </div>
 
                 <div class="form-group form-check">
-                    <label asp-for="Product.IsFavorite" class="form-check-label">Обраний</label>
                     <input asp-for="Product.IsFavorite" type="checkbox" class="form-check-input" />
+                    <label asp-for="Product.IsFavorite" class="form-check-label">Обраний</label>
                 </div>
 
                 <div class="form-group form-check">
-                    <label asp-for="Product.IsAvailible" class="form-check-label">Доступний</label>
                     <input asp-for="Product.IsAvailible" type="checkbox" class="form-check-input" />
+                    <label asp-for="Product.IsAvailible" class="form-check-label">Доступний</label>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Product.CategoryId" class="control-label">Категорія</label>
                     <input asp-for="Product.CategoryId" class="form-control" />
-
                 </div>
 
                 <div class="form-group">
@@ -69,12 +68,12 @@
 
                 @if (Model.Product != null && Model.Product.ImageUrls != null)
                 {
-                    <div class="form-group">
-                        <label>Поточні зображення</label>
+                    <label>Поточні зображення</label>
+                    <div class="form-group current-images">
                         @for (int i = 0; i < Model.Product.ImageUrls.Count; i++)
                         {
-                            <div>
-                                <img src="@Url.Content($"{Model.Product.ImageUrls[i].ImageUrls}?t={DateTime.Now.Ticks}")" alt="Зображення товару" style="max-width: 200px; max-height: 200px;" />
+                            <div class="d-inline-block">
+                                <img src="@Url.Content($"{Model.Product.ImageUrls[i].ImageUrls}?t={DateTime.Now.Ticks}")" alt="Зображення товару" class="img-thumbnail" />
                                 <input type="checkbox" name="DeletedImageUrls" value="@Model.Product.ImageUrls[i].ImageUrls" /> Видалити
                             </div>
                         }
@@ -94,7 +93,7 @@
                 }
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+                <button type="submit" class="btn btn-primary btn-block">Зберегти зміни</button>
             </form>
         </div>
     </div>

@@ -4,61 +4,61 @@
     ViewData["Title"] = "Додати товар";
 }
 
-<div class="container mt-5">
+<div class="container edit-product-container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2 class="text-center">Додати товар</h2>
             <form asp-controller="Admin" asp-action="AddProduct" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label asp-for="Product.ProductType" class="control-label"></label>
+                    <label asp-for="Product.ProductType" class="control-label">Тип продукту</label>
                     <input asp-for="Product.ProductType" class="form-control" />
                     <span asp-validation-for="Product.ProductType" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Product.Brand" class="control-label"></label>
+                    <label asp-for="Product.Brand" class="control-label">Бренд</label>
                     <input asp-for="Product.Brand" class="form-control" />
                     <span asp-validation-for="Product.Brand" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Product.Name" class="control-label"></label>
+                    <label asp-for="Product.Name" class="control-label">Назва</label>
                     <input asp-for="Product.Name" class="form-control" />
                     <span asp-validation-for="Product.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Product.Description" class="control-label"></label>
+                    <label asp-for="Product.Description" class="control-label">Опис</label>
                     <textarea asp-for="Product.Description" class="form-control"></textarea>
                     <span asp-validation-for="Product.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Product.ShortDesc" class="control-label"></label>
+                    <label asp-for="Product.ShortDesc" class="control-label">Короткий опис</label>
                     <input asp-for="Product.ShortDesc" class="form-control" />
                     <span asp-validation-for="Product.ShortDesc" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Product.Img" class="control-label"></label>
+                    <label asp-for="Product.Img" class="control-label">Зображення</label>
                     <input asp-for="Product.Img" class="form-control" />
                     <span asp-validation-for="Product.Img" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Product.Price" class="control-label"></label>
+                    <label asp-for="Product.Price" class="control-label">Ціна</label>
                     <input asp-for="Product.Price" class="form-control" />
                     <span asp-validation-for="Product.Price" class="text-danger"></span>
                 </div>
                 <div class="form-group form-check">
                     <input asp-for="Product.IsFavorite" type="checkbox" class="form-check-input" />
-                    <label asp-for="Product.IsFavorite" class="form-check-label"></label>
+                    <label asp-for="Product.IsFavorite" class="form-check-label">Обраний</label>
                 </div>
                 <div class="form-group form-check">
                     <input asp-for="Product.IsAvailible" type="checkbox" class="form-check-input" />
-                    <label asp-for="Product.IsAvailible" class="form-check-label"></label>
+                    <label asp-for="Product.IsAvailible" class="form-check-label">Доступний</label>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Product.CategoryId" class="control-label"></label>
+                    <label asp-for="Product.CategoryId" class="control-label">Категорія</label>
                     <input asp-for="Product.CategoryId" class="form-control"/>
                     <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Images" class="control-label"></label>
+                <div class="form-group-img">
+                    <label asp-for="Images" class="control-label">Додати фото товару для слайдера:</label>
                     <input asp-for="Images" type="file" multiple class="form-control-file" />
                 </div>
 
@@ -75,7 +75,7 @@
                 }
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <button type="submit" class="btn btn-primary">Додати товар</button>
+                <button type="submit" class="btn btn-secondary">Додати товар</button>
             </form>
         </div>
     </div>
