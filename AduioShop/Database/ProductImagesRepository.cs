@@ -1,5 +1,6 @@
 ﻿using AudioShop.Data.Models;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace AudioShop.Database
 {
@@ -16,6 +17,10 @@ namespace AudioShop.Database
             return audioShopDBContext.ProductImages
                 .Where(pi => pi.ProductId == productId)
                 .ToList();
+        }
+        public async Task<List<ProductImages>> GetProductImagesByProductIdAsync(int productId)
+        {
+            return await audioShopDBContext.ProductImages.Where(pi => pi.ProductId == productId).ToListAsync();
         }
 
         public void AddProductImages(ProductImages productImages)
@@ -57,7 +62,11 @@ namespace AudioShop.Database
 
             audioShopDBContext.SaveChanges();
         }
-
+        public async Task UpdateProductImagesAsync(Product product, List<ProductImages> productImages)
+        {
+            audioShopDBContext.ProductImages.UpdateRange(productImages);
+            await audioShopDBContext.SaveChangesAsync();
+        }
         public void DeleteProductImage(ProductImages productImage)
         {
             var existingImage = audioShopDBContext.ProductImages

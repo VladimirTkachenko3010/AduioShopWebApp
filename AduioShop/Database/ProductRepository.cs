@@ -54,6 +54,13 @@ namespace AudioShop.Database
             }
         }
 
+        //public async Task UpdateProductImgAsync(Product product)
+        //{
+        //    var existingProduct = await audioShopDBContext.Product.FirstOrDefaultAsync(p => p.Id == product.Id);
+        //    audioShopDBContext.Product.Update(product);
+        //    await audioShopDBContext.SaveChangesAsync();
+        //}
+
         public async Task DeleteProductAsync(Product productToDelete)
         {
             audioShopDBContext.Product.Remove(productToDelete);

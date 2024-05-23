@@ -1,6 +1,21 @@
 ﻿@model Order
+@{
+    ViewBag.Title = "Оформлення замовлення";
+}
 
-<div class="row">
+@if (ViewBag.ValidationErrors != null && ViewBag.ValidationErrors.Count > 0)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewBag.ValidationErrors)
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="container edit-product-container">
     <h3>Оформлення замовлення</h3>
     <form asp-action="Checkout" method="post" class="form-horizontal">
         <div class="form-group row">
@@ -40,8 +55,8 @@
         </div>
 
         <div class="form-group row">
-            <div class="col-md-7">
-                <button type="submit" class="btn btn-success float-end">Завершити замовлення</button>
+            <div class="col-md-7 text-center">
+                <button type="submit" class="btn btn-success mx-auto">Завершити замовлення</button>
             </div>
         </div>
     </form>
@@ -52,59 +67,3 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate.unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 }
-
-
-
-
-
-
-
-@* 
-@model Order
-
-<div class="row">
-    <h3> Оформлення замовлення</h3>
-    <form asp-action="Checkout" method="post" class="form-horizontal">
-        <div class="form-group">
-            <label asp-for="Name"></label>
-            <div class="col-md-5">
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Surname"></label>
-            <div class="col-md-5">
-                <input asp-for="Surname" class="form-control" />
-                <span asp-validation-for="Surname" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Address"></label>
-            <div class="col-md-5">
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Phone"></label>
-            <div class="col-md-5">
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Email"></label>
-            <div class="col-md-5">
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-        </div>
-
-        <input class="btn btn-success" asp-controller="Order" asp-action="Checkout" type="submit" value="Завершити замовлення" />
-
-    </form>
-
-</div>
-
- *@

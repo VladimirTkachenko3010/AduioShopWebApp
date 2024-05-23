@@ -375,4 +375,93 @@ header .admin-panel-button {
         .edit-product-container .alert-danger ul {
             margin-bottom: 0;
         }
+/* Основной контейнер для страницы товара */
+.product-container {
+    display: grid; /* Используем CSS Grid для разметки */
+    grid-template-columns: 2fr 1fr; /* Увеличиваем ширину первой колонки для слайдера */
+    grid-template-rows: auto auto auto; /* Три строки для разного контента */
+    gap: 20px; /* Отступы между элементами */
+    padding: 20px; /* Внутренние отступы */
+    background-color: #f8f9fa; /* Фоновый цвет */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для блока */
+}
 
+/* Секция слайдера продукта */
+.product-slider {
+    grid-column: 1 / 2; /* Расположение в первой колонке */
+    grid-row: 1 / 2; /* Расположение в первой строке */
+}
+
+.carousel-item img {
+    width: 100%; /* Ширина изображения */
+    height: 500px; /* Увеличенная фиксированная высота изображения */
+    object-fit: cover; /* Обрезка изображения по размеру */
+    border-radius: 10px; /* Скругленные углы */
+}
+
+/* Секция информации о продукте */
+.product-info {
+    grid-column: 2 / 3; /* Расположение во второй колонке */
+    grid-row: 1 / 2; /* Расположение в первой строке */
+}
+
+    .product-info p {
+        margin: 10px 0; /* Отступы сверху и снизу */
+        font-size: 1.1em; /* Размер шрифта */
+    }
+
+    .product-info strong {
+        color: #495057; /* Цвет текста */
+    }
+
+/* Секция описания продукта */
+.product-description {
+    grid-column: 1 / 3; /* Расположение на всю ширину */
+    grid-row: 2 / 3; /* Расположение во второй строке */
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+    .product-description p {
+        margin: 10px 0; /* Отступы сверху и снизу */
+        font-size: 1.1em; /* Размер шрифта */
+    }
+
+/* Секция с кнопкой добавления в корзину */
+.product-action {
+    grid-column: 2 / 3; /* Расположение во второй колонке */
+    grid-row: 3 / 4; /* Расположение в третьей строке */
+    display: flex; /* Flexbox для выравнивания */
+    justify-content: flex-end; /* Выравнивание справа */
+    align-items: center; /* Вертикальное выравнивание */
+}
+
+    .product-action .btn-warning {
+        background-color: #ffc107; /* Фоновый цвет кнопки */
+        border-color: #ffc107; /* Цвет границы кнопки */
+        color: #212529; /* Цвет текста */
+        font-weight: bold; /* Жирный текст */
+        padding: 10px 20px; /* Внутренние отступы */
+    }
+
+        .product-action .btn-warning:hover {
+            background-color: #e0a800; /* Фоновый цвет при наведении */
+            border-color: #d39e00; /* Цвет границы при наведении */
+        }
+
+/* Стили для карусели */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+    border-radius: 50%; /* Скругленные углы */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px; /* Ширина кнопок */
+}
+
+    .carousel-control-prev:hover .carousel-control-prev-icon,
+    .carousel-control-next:hover .carousel-control-next-icon {
+        background-color: rgba(0, 0, 0, 0.8); /* Фон при наведении */
+    }

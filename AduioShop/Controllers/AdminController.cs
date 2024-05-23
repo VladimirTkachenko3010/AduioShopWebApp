@@ -20,8 +20,10 @@ namespace AudioShop.Controllers
         private readonly ProductImagesRepository _productImagesRepository;
 
 
+
         public AdminController(UserManager<User> userManager, IProductsCategory categoryService,
-            IAllProducts allProducts, AudioShopDBContext audioShopDBContext, IWebHostEnvironment webHostEnvironment, ProductImagesRepository productImagesRepository)
+            IAllProducts allProducts, AudioShopDBContext audioShopDBContext, IWebHostEnvironment webHostEnvironment,
+            ProductImagesRepository productImagesRepository)
         {
             _userManager = userManager;
             _categoryService = categoryService;
@@ -108,31 +110,45 @@ namespace AudioShop.Controllers
             return View();
         }
 
-        // GET: Admin/AddProduct
-        public IActionResult AddProduct()
+
+        // Метод для получения модели ProductEditViewModel с заполненными списками
+        private ProductEditViewModel GetProductEditViewModel()
         {
             var categories = _categoryService.AllCategories.ToList();
-            var model = new ProductEditViewModel
+            var productTypes = categories.Select(c => c.ProductType).Distinct().ToList();
+
+            return new ProductEditViewModel
             {
                 Product = new Product(),
-                CategoriesList = categories
+                CategoriesList = categories,
+                ProductTypes = productTypes
             };
+        }
+
+        [HttpGet]
+        public IActionResult AddProduct()
+        {
+            var model = GetProductEditViewModel();
             return View(model);
         }
 
-
-        // POST: Admin/AddProduct
         [HttpPost]
         public async Task<IActionResult> AddProductAsync(ProductEditViewModel model)
         {
+            // Удаляем проверки для полей, которые не должны валидироваться
             ModelState.Remove("CategoriesList");
+            ModelState.Remove("ProductTypes");
             ModelState.Remove("DeletedImageUrls");
             ModelState.Remove("Product.Category");
             ModelState.Remove("Product.SearchTerm");
             ModelState.Remove("Product.ImageUrls");
+            ModelState.Remove("Product.Img");
 
             if (ModelState.IsValid)
             {
+                var category = _categoryService.GetCategoryByProductType(model.Product.ProductType);
+                model.Product.CategoryId = category.Id;
+
                 var product = new Product
                 {
                     ProductType = model.Product.ProductType,
@@ -140,13 +156,13 @@ namespace AudioShop.Controllers
                     Name = model.Product.Name,
                     Description = model.Product.Description,
                     ShortDesc = model.Product.ShortDesc,
-                    Img = model.Product.Img,
                     Price = model.Product.Price,
                     IsFavorite = model.Product.IsFavorite,
                     IsAvailible = model.Product.IsAvailible,
                     CategoryId = model.Product.CategoryId,
                     Category = model.Product.Category,
                 };
+                product.Img = $"/img/{model.Product.ProductType}/{model.Product.Name}/{model.Product.Name}-1.jpg";
 
                 _allProducts.AddProduct(product);
 
@@ -170,7 +186,6 @@ namespace AudioShop.Controllers
 
                             var filePath = Path.Combine(folderPath, fileName);
 
-
                             using (var fileStream = new FileStream(filePath, FileMode.Create))
                             {
                                 await image.CopyToAsync(fileStream);
@@ -185,22 +200,28 @@ namespace AudioShop.Controllers
                             i++;
                         }
                     }
-                    _productImagesRepository.AddListProductImages(productImages);
 
+                    _productImagesRepository.AddListProductImages(productImages);
                 }
 
                 #endregion
 
                 return RedirectToAction("Catalog", "Products");
             }
+
+            // В случае ошибки, заново заполняем списки категорий и типов продуктов
+            model.CategoriesList = _categoryService.AllCategories.ToList();
+            model.ProductTypes = model.CategoriesList.Select(c => c.ProductType).Distinct().ToList();
+
             ViewBag.ErrorMessages = ModelState.Values
-        .SelectMany(v => v.Errors)
-        .Select(e => e.ErrorMessage)
-        .ToList();
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage)
+                .ToList();
+
             return View(model);
         }
 
-        // GET: Admin/EditProduct/{id}
+        [HttpGet]
         public async Task<IActionResult> EditProduct(int id)
         {
             var product = await _allProducts.getObjectProductAsync(id);
@@ -208,40 +229,56 @@ namespace AudioShop.Controllers
             {
                 return NotFound();
             }
-            var productImages = _productImagesRepository.GetProductImagesByProductId(id);
 
+            var productImages = _productImagesRepository.GetProductImagesByProductId(id);
             product.ImageUrls = productImages.Select(pi => new ProductImages
             {
                 Name = pi.Name,
                 ImageUrls = $"/{Path.Combine("img", product.ProductType, product.Name)}/{Path.GetFileName(pi.Name)}"
             }).ToList();
+
+            var productTypes = _categoryService.AllCategories
+                .Select(c => c.ProductType)
+                .Distinct()
+                .ToList();
+
             var model = new ProductEditViewModel
             {
                 Product = product,
                 DeletedImageUrls = new List<bool>(),
-                CategoriesList = _categoryService.AllCategories.ToList()
+                CategoriesList = _categoryService.AllCategories.ToList(),
+                ProductTypes = productTypes
             };
 
             return View(model);
         }
 
-        // POST: Admin/EditProduct
+
         [HttpPost]
         public async Task<IActionResult> EditProduct(ProductEditViewModel model, [FromForm] List<string> DeletedImageUrls)
         {
             #region removes
             ModelState.Remove("DeletedImageUrls");
             ModelState.Remove("CategoriesList");
+            ModelState.Remove("ProductTypes");
             ModelState.Remove("Product.Category");
             ModelState.Remove("Product.SearchTerm");
             ModelState.Remove("Product.SearchTerm");
             ModelState.Remove("Product.ImageUrls");
             ModelState.Remove("Images");
-
             #endregion
 
             if (ModelState.IsValid)
             {
+                var category = _categoryService.GetCategoryByProductType(model.Product.ProductType);
+                model.Product.CategoryId = category.Id;
+
+                var existingProduct = await _allProducts.getObjectProductAsync(model.Product.Id);
+                if (existingProduct == null)
+                {
+                    return NotFound();
+                }
+
                 var product = new Product
                 {
                     Id = model.Product.Id,
@@ -259,15 +296,11 @@ namespace AudioShop.Controllers
                     ImageUrls = model.Product.ImageUrls
                 };
 
+                bool productTypeChanged = !string.Equals(existingProduct.ProductType, model.Product.ProductType, StringComparison.OrdinalIgnoreCase);
+
                 if (DeletedImageUrls != null)
                 {
-
                     DeletedImageUrls = DeletedImageUrls.Select(url => url.Replace("\\", "/")).ToList();
-                    Console.WriteLine("DeletedImageUrls:");
-                    foreach (var url in DeletedImageUrls)
-                    {
-                        Console.WriteLine(url);
-                    }
                     await DeleteSelectedImages(model, product, DeletedImageUrls);
                 }
 
@@ -276,17 +309,47 @@ namespace AudioShop.Controllers
                     await SaveProductImagesAsync(model, product, DeletedImageUrls);
                 }
 
+                if (productTypeChanged)
+                {
+                    await MoveProductImagesAsync(existingProduct, model.Product.ProductType);
+                    var imageDirectoryPath = Path.Combine("wwwroot", "img", model.Product.ProductType ?? string.Empty, model.Product.Name ?? string.Empty);
+                    if (Directory.Exists(imageDirectoryPath))
+                    {
+                        var existingFiles = Directory.GetFiles(imageDirectoryPath, "*.jpg");
+                        if (existingFiles.Any())
+                        {
+                            var fileName = existingFiles.First().Replace("\\", "/");
+                            product.Img = fileName.Substring("wwwroot".Length);
+                        }
+                    }
+                }
+
                 await _allProducts.UpdateProductAsync(product);
 
                 return RedirectToAction("Catalog", "Products");
             }
 
+            // В случае ошибки, заново заполняем списки категорий, типов продуктов и изображения
+            model.CategoriesList = _categoryService.AllCategories.ToList();
+            model.ProductTypes = model.CategoriesList.Select(c => c.ProductType).Distinct().ToList();
+
+            var productImages = _productImagesRepository.GetProductImagesByProductId(model.Product.Id);
+            model.Product.ImageUrls = productImages.Select(pi => new ProductImages
+            {
+                Name = pi.Name,
+                ImageUrls = $"/{Path.Combine("img", model.Product.ProductType ?? string.Empty, model.Product.Name ?? string.Empty)}/{Path.GetFileName(pi.Name)}"
+            }).ToList();
+
             ViewBag.ErrorMessages = ModelState.Values
                 .SelectMany(v => v.Errors)
                 .Select(e => e.ErrorMessage)
                 .ToList();
+
             return View(model);
         }
+
+
+
 
 
         private async Task SaveProductImagesAsync(ProductEditViewModel model, Product product, List<string> deletedImageUrls)
@@ -368,6 +431,50 @@ namespace AudioShop.Controllers
             }).ToList();
 
             _productImagesRepository.UpdateProductImages(product, product.ImageUrls);
+        }
+
+
+        private async Task MoveProductImagesAsync(Product product, string newProductType)
+        {
+            var currentFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "img", product.ProductType, product.Name);
+            var newFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "img", newProductType, product.Name);
+
+            if (!Directory.Exists(newFolderPath))
+            {
+                Directory.CreateDirectory(newFolderPath);
+            }
+
+            if (Directory.Exists(currentFolderPath))
+            {
+                var files = Directory.GetFiles(currentFolderPath);
+
+                foreach (var file in files)
+                {
+                    var fileName = Path.GetFileName(file);
+                    var newFilePath = Path.Combine(newFolderPath, fileName);
+
+                    if (System.IO.File.Exists(newFilePath))
+                    {
+                        System.IO.File.Delete(newFilePath);
+                    }
+
+                    System.IO.File.Move(file, newFilePath);
+                }
+
+                // Delete old directory if empty
+                if (Directory.GetFiles(currentFolderPath).Length == 0 && Directory.GetDirectories(currentFolderPath).Length == 0)
+                {
+                    Directory.Delete(currentFolderPath);
+                }
+            }
+
+            // Update image URLs in database
+            var productImages = await _productImagesRepository.GetProductImagesByProductIdAsync(product.Id);
+            foreach (var image in productImages)
+            {
+                image.ImageUrls = $"/img/{newProductType}/{product.Name}/{image.Name}";
+            }
+            await _productImagesRepository.UpdateProductImagesAsync(product, productImages);
         }
 
 

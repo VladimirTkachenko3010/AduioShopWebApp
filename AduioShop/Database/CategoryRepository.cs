@@ -18,6 +18,11 @@ namespace AudioShop.Database
         {
             return audioShopDBContext.Category.Find(id);
         }
+        public Category GetCategoryByProductType(string productType)
+        {
+            return audioShopDBContext.Category.FirstOrDefault(c => c.ProductType == productType);
+        }
+
 
         public void AddCategory(Category category)
         {

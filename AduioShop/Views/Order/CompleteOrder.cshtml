@@ -1,1 +1,8 @@
-﻿<h3> @ViewBag.Message</h3>
+﻿@{
+    ViewBag.Title = "Замовлення успішно оброблене";
+}
+<h3 align ="center"> @ViewBag.Message</h3>
+
+<div class="text-center">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Повернутися на головну</a>
+</div>

@@ -26,46 +26,9 @@
     <div class="cart-summary">
         <b>Загальна сума кошика:</b> @Model.Cart.CartItems.Sum(item => item.Product.Price * item.Quantity).ToString("c")
         <hr />
-        <a class="btn btn-checkout" asp-controller="Order" asp-action="Checkout">Оплатити</a>
+        @if (Model.Cart.CartItems.Count() > 0)
+        {
+            <a class="btn btn-checkout" asp-controller="Order" asp-action="Checkout">Оплатити</a>
+        }
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-@* 
-@model CartViewModel
-
-<div class="container" >
-    @foreach(var el in Model.Cart.CartItems)
-    {
-        <div class="alert alert-warning mt-3">
-        <b>Название продукта: </b> @el.Product.Name<br />
-        <b>Цена продукта: </b> @el.Product.Price.ToString("c")<br />
-            <b>Количество: </b>
-            <form asp-controller="Cart" asp-action="UpdateQuantity" method="post">
-                <input type="hidden" name="productId" value="@el.Product.Id" />
-                <input type="number" name="quantity" value="@el.Quantity" min="1" max="100" onchange="this.form.submit()">
-            </form>
-            <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
-                <input type="hidden" name="productId" value="@el.Product.Id" />
-                <button type="submit">Удалить из корзины</button>
-            </form>
-            <div>
-                <b>Сумма:</b> @(el.Quantity * el.Product.Price)
-            </div>
-        </div>
-    }
-
-    <div>
-        <b>Общая сумма корзины:</b> @Model.Cart.CartItems.Sum(item => item.Product.Price * item.Quantity).ToString("c")
-        <hr />
-    <a class="btn btn-danger" asp-controller="Order" asp-action="Checkout">Оплатить</a>
-</div> *@
-
-

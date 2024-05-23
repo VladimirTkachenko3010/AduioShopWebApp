@@ -6,6 +6,7 @@ namespace AudioShop.Data.Interfaces
     {
         IEnumerable<Category> AllCategories { get; }
         Category GetCategoryById(int id);
+        Category GetCategoryByProductType(string ProductType);
         void AddCategory(Category category);
         void UpdateCategory(Category category);
         void DeleteCategory(int id);

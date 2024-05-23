@@ -15,38 +15,45 @@ namespace AudioShop.Controllers
             this.cart = cart;
         }
 
-
+        // Проверяем корзину перед отображением страницы оформления заказа
         public IActionResult Checkout()
         {
+            cart.CartItems = cart.GetCartItems();
+
+            if (cart.CartItems.Count == 0)
+            {
+                // Добавляем ошибку модели и возвращаем на страницу корзины
+                ModelState.AddModelError("", "Ваш кошик порожній. Додайте товари перед оформленням замовлення.");
+                return RedirectToAction("Index", "Cart");
+            }
+
             return View();
         }
+
+        // Обработка данных заказа
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
-
             cart.CartItems = cart.GetCartItems();
 
-            if (cart.CartItems.Count == 0) 
+            if (cart.CartItems.Count == 0)
             {
-                ModelState.AddModelError("", "У вас повинні бути товари в кошику!");
+                ModelState.AddModelError("", "У вас повинні бути товари в кошику");
             }
-            if (cart.CartItems.Count > 0) 
-            {
-                allOrders.CreateOrder(order);
-            }
+
             if (ModelState.IsValid)
             {
-                return RedirectToAction("CompleteOrder", "Order");
+                allOrders.CreateOrder(order);
+                return RedirectToAction("CompleteOrder");
             }
-            if (!ModelState.IsValid)
+            else
             {
                 ViewBag.ValidationErrors = ModelState.Values.SelectMany(v => v.Errors).ToList();
-                return RedirectToAction("CompleteOrder", "Order");
+                return View(order);
             }
-            return View(order);
         }
 
-
+        // Отображение сообщения об успешном заказе
         public IActionResult CompleteOrder()
         {
             ViewBag.Message = "Замовлення успішно оброблене";

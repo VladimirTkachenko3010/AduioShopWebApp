@@ -12,6 +12,8 @@ namespace AudioShop.Data.Interfaces
         void AddProduct(Product product);
 
         Task UpdateProductAsync(Product product);
+        //Task UpdateProductImgAsync(Product product);
+
         Task<Product> getObjectProductAsync(int id);
         Task DeleteProductAsync(Product productToDelete);
     }
