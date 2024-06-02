@@ -9,10 +9,8 @@ namespace AudioShop.Data.Models
         public string LoginProp { get; set; }
         [Required(ErrorMessage = "Електронна пошта обов'язкова"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
         [Required(ErrorMessage = "Пароль обов'язковий"), DataType(DataType.Password)]
         public string Password { get; set; }
-
         [DataType(DataType.Password), Compare(nameof(Password), ErrorMessage = "Паролі не співпадають")]
         public string ConfirmPassword { get; set; }
         [Required(ErrorMessage = "Ім'я обов'язкове")]

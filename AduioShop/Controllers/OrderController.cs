@@ -15,32 +15,25 @@ namespace AudioShop.Controllers
             this.cart = cart;
         }
 
-        // Проверяем корзину перед отображением страницы оформления заказа
         public IActionResult Checkout()
         {
             cart.CartItems = cart.GetCartItems();
-
             if (cart.CartItems.Count == 0)
             {
-                // Добавляем ошибку модели и возвращаем на страницу корзины
                 ModelState.AddModelError("", "Ваш кошик порожній. Додайте товари перед оформленням замовлення.");
                 return RedirectToAction("Index", "Cart");
             }
-
             return View();
         }
 
-        // Обработка данных заказа
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
             cart.CartItems = cart.GetCartItems();
-
             if (cart.CartItems.Count == 0)
             {
                 ModelState.AddModelError("", "У вас повинні бути товари в кошику");
             }
-
             if (ModelState.IsValid)
             {
                 allOrders.CreateOrder(order);
@@ -53,7 +46,6 @@ namespace AudioShop.Controllers
             }
         }
 
-        // Отображение сообщения об успешном заказе
         public IActionResult CompleteOrder()
         {
             ViewBag.Message = "Замовлення успішно оброблене";

@@ -18,6 +18,7 @@ namespace AudioShop.Database
                 .Where(pi => pi.ProductId == productId)
                 .ToList();
         }
+
         public async Task<List<ProductImages>> GetProductImagesByProductIdAsync(int productId)
         {
             return await audioShopDBContext.ProductImages.Where(pi => pi.ProductId == productId).ToListAsync();
@@ -38,35 +39,26 @@ namespace AudioShop.Database
         public void UpdateProductImages(Product product, List<ProductImages> productImages)
         {
             if (productImages == null || !productImages.Any()) return;
-
             var productId = productImages.First().ProductId;
             var existingImages = audioShopDBContext.ProductImages
                 .Where(pi => pi.ProductId == productId)
                 .ToList();
-
-            // Приводим пути к единому формату
             var existingImageUrls = existingImages.Select(img => img.ImageUrls.Replace("\\", "/")).ToList();
             var newImageUrls = productImages.Select(img => img.ImageUrls.Replace("\\", "/")).ToList();
-
-            // Удаляем из product.ImageUrls старые изображения, которые не содержатся в новом списке
             product.ImageUrls.RemoveAll(img => !newImageUrls.Contains(img.ImageUrls));
-
-            // Удаляем только те изображения, которые отсутствуют в новом списке
             var imagesToRemove = existingImages.Where(img => !newImageUrls.Contains(img.ImageUrls)).ToList();
             audioShopDBContext.ProductImages.RemoveRange(imagesToRemove);
-
-
-            // Добавляем новые изображения
             var imagesToAdd = productImages.Where(img => !existingImageUrls.Contains(img.ImageUrls)).ToList();
             audioShopDBContext.ProductImages.AddRange(imagesToAdd);
-
             audioShopDBContext.SaveChanges();
         }
+
         public async Task UpdateProductImagesAsync(Product product, List<ProductImages> productImages)
         {
             audioShopDBContext.ProductImages.UpdateRange(productImages);
             await audioShopDBContext.SaveChangesAsync();
         }
+
         public void DeleteProductImage(ProductImages productImage)
         {
             var existingImage = audioShopDBContext.ProductImages
@@ -83,6 +75,5 @@ namespace AudioShop.Database
             audioShopDBContext.ProductImages.RemoveRange(productImages);
             audioShopDBContext.SaveChanges();
         }
-
     }
 }

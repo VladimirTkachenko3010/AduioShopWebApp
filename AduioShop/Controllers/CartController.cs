@@ -15,7 +15,6 @@ namespace AudioShop.Controllers
             _cart = cart;
         }
 
-        // Отображает содержимое корзины
         public ViewResult Index()
         {
             var items = _cart.GetCartItems();
@@ -27,7 +26,6 @@ namespace AudioShop.Controllers
             return View(obj);
         }
 
-        // Добавляет товар в корзину по id
         public RedirectToActionResult AddToCart(int id)
         {
             var item = _productRepository.Products.FirstOrDefault(x => x.Id == id);
@@ -38,7 +36,6 @@ namespace AudioShop.Controllers
             return RedirectToAction("Index");
         }
 
-        // Удаляет товар из корзины
         [HttpPost]
         public IActionResult RemoveFromCart(int productId)
         {
@@ -46,7 +43,6 @@ namespace AudioShop.Controllers
             return RedirectToAction("Index");
         }
 
-        // Обновляет количество товара в корзине
         [HttpPost]
         public IActionResult UpdateQuantity(int productId, int quantity)
         {

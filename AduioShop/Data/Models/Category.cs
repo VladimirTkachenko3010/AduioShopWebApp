@@ -29,7 +29,6 @@ namespace AudioShop.Data.Models
         }
         public Category()
         {
-            
         }
     }
 }

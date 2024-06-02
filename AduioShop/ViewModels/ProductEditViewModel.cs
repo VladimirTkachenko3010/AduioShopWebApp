@@ -14,6 +14,5 @@ namespace AudioShop.ViewModels
         public IEnumerable<Category> CategoriesList { get; set; }
         [Required(ErrorMessage = "Категорія товару обов'язкова")]
         public IEnumerable<string> ProductTypes { get; set; }
-
     }
 }

@@ -37,15 +37,12 @@ namespace AudioShop.Database
             audioShopDBContext.SaveChanges();
         }
 
-
-
         public async Task UpdateProductAsync(Product product)
         {
             var existingProduct = await audioShopDBContext.Product.FirstOrDefaultAsync(p => p.Id == product.Id);
             if (existingProduct != null)
             {
                 audioShopDBContext.Entry(existingProduct).CurrentValues.SetValues(product);
-
                 await audioShopDBContext.SaveChangesAsync();
             }
             else
@@ -54,13 +51,6 @@ namespace AudioShop.Database
             }
         }
 
-        //public async Task UpdateProductImgAsync(Product product)
-        //{
-        //    var existingProduct = await audioShopDBContext.Product.FirstOrDefaultAsync(p => p.Id == product.Id);
-        //    audioShopDBContext.Product.Update(product);
-        //    await audioShopDBContext.SaveChangesAsync();
-        //}
-
         public async Task DeleteProductAsync(Product productToDelete)
         {
             audioShopDBContext.Product.Remove(productToDelete);
@@ -68,4 +58,3 @@ namespace AudioShop.Database
         }
     }
 }
-

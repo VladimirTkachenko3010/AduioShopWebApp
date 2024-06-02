@@ -10,10 +10,7 @@ namespace AudioShop.Data.Interfaces
         IEnumerable<Product> SearchProducts(string searchTerm);
         Product getObjectProduct(int productId);
         void AddProduct(Product product);
-
         Task UpdateProductAsync(Product product);
-        //Task UpdateProductImgAsync(Product product);
-
         Task<Product> getObjectProductAsync(int id);
         Task DeleteProductAsync(Product productToDelete);
     }

@@ -59,8 +59,6 @@ namespace AudioShop.Data.Models
             CategoryId = categoryId;
             Category = category; 
             ImageUrls = imageUrls;
-
-            //SearchTerm = searchTerm;
         }
 
         public Product(string productType, string brand, string name, string description,
@@ -78,7 +76,6 @@ namespace AudioShop.Data.Models
             CategoryId = categoryId;
             Category = category;
             ImageUrls = imageUrls;
-            //SearchTerm = searchTerm;
         }
     }
 }

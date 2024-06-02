@@ -12,8 +12,8 @@ namespace AudioShop.Data.Models
         }
 
         public string CartId { get; set; }
-        public List<CartItem> CartItems { get; set; }   
-        
+        public List<CartItem> CartItems { get; set; }
+
         public static Cart GetCart(IServiceProvider serviceProvider)
         {
             ISession session = serviceProvider.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
@@ -47,7 +47,6 @@ namespace AudioShop.Data.Models
                     Quantity = 1
                 });
             }
-
             audioShopDBContext.SaveChanges();
         }
 
@@ -63,7 +62,7 @@ namespace AudioShop.Data.Models
                 {
                     cartItem.Quantity = 1;
                 }
-                audioShopDBContext.SaveChanges(); // Сохраняем изменения в базе данных
+                audioShopDBContext.SaveChanges();
             }
         }
 

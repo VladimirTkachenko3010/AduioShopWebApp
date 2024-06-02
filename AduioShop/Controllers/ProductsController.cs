@@ -33,7 +33,6 @@ namespace AudioShop.Controllers
         [Route("Products/Catalog/{category}")]
         public IActionResult Catalog(string category)
         {
-
             string _category = category;
             IEnumerable<Product> products;
             string currentCategory = string.Empty;
@@ -71,7 +70,6 @@ namespace AudioShop.Controllers
             return View(productObj);
         }
 
-
         public IActionResult ProductDetails(int id)
         {
             var product = allProducts.getObjectProduct(id);
@@ -93,6 +91,5 @@ namespace AudioShop.Controllers
             }
             return View(product); 
         }
-
     }
 }

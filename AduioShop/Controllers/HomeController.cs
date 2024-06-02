@@ -6,15 +6,11 @@ namespace AudioShop.Controllers
 {
     public class HomeController : Controller
     {
-
         private IAllProducts _productRepository;
-
         public HomeController(IAllProducts productRepository)
         {
             _productRepository = productRepository;
         }
-
-
         public ViewResult Index()
         {
             var homeProducts = new HomeViewModel
@@ -23,10 +19,5 @@ namespace AudioShop.Controllers
             };
             return View(homeProducts);
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }

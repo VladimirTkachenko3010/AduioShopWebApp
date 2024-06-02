@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AudioShop.Controllers.AccountController" Collapsed="true">
+    <Position X="12.5" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAABACAIgAAABAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_userManager" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Controllers.AdminController" Collapsed="true">
+    <Position X="12.5" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEABABAIAAIQAAABCAIQCgAQAAAAAAAAAEAAAAABAA=</HashCode>
+      <FileName>Controllers\AdminController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_allProducts" />
+      <Field Name="_categoryService" />
+      <Field Name="_userManager" />
+      <Field Name="_productImagesRepository" />
+      <Field Name="_audioShopDBContext" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Controllers.CartController" Collapsed="true">
+    <Position X="4" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIEAAAAAAAAAAAAEAAAAAAAAAAAGAAAAAACA=</HashCode>
+      <FileName>Controllers\CartController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_productRepository" />
+      <Field Name="_cart" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Controllers.HomeController" Collapsed="true">
+    <Position X="7" Y="19" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_productRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Controllers.OrderController" Collapsed="true">
+    <Position X="3.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAABABAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\OrderController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="allOrders" />
+      <Field Name="cart" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Controllers.ProductsController" Collapsed="true">
+    <Position X="10" Y="19" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAAAAAAAAgIgAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\ProductsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="allProducts" />
+      <Field Name="productsCategory" />
+      <Field Name="_productImagesRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Data.Models.Cart" Collapsed="true">
+    <Position X="3.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAEEAgAAAAIAAAAAAgAAACCA=</HashCode>
+      <FileName>Data\Models\Cart.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CartItems" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AudioShop.Data.Models.CartItem" Collapsed="true">
+    <Position X="7.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAgAAACAA=</HashCode>
+      <FileName>Data\Models\CartItem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Product" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Data.Models.Category" Collapsed="true">
+    <Position X="7" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAQAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Data\Models\Category.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Products" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AudioShop.Data.Models.Order" Collapsed="true">
+    <Position X="12.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAFAAAAQABAAAAAACAAAAIAAAAAA=</HashCode>
+      <FileName>Data\Models\Order.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="OrderDetails" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AudioShop.Data.Models.OrderDetail" Collapsed="true">
+    <Position X="11.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAECAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\OrderDetail.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Order" />
+      <Property Name="Product" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Data.Models.Product" Collapsed="true">
+    <Position X="9" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACQgAQAQAgAggAAAAAAAQAAAAAAACIAAAAAAABCAA=</HashCode>
+      <FileName>Data\Models\Product.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Category" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ImageUrls" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AudioShop.Data.Models.ProductImages" Collapsed="true">
+    <Position X="6.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACQAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\ProductImages.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Product" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Data.Models.User" Collapsed="true">
+    <Position X="3.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAQAQABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioShop.Data.Models.UserLogin" Collapsed="true">
+    <Position X="3.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAACAAA=</HashCode>
+      <FileName>Data\Models\UserLogin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioShop.Data.Models.UserRegistration" Collapsed="true">
+    <Position X="3.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAQAQABAAAAAACAAAAAAACIAA=</HashCode>
+      <FileName>Data\Models\UserRegistration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioShop.Database.AudioShopDBContext" Collapsed="true">
+    <Position X="9.5" Y="15" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAEKAAAQgAAAAAAAABAAAAAAEAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Database\AudioShopDBContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioShop.Database.CategoryRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="13" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAYAAAAAAAAAIAAAAAgAAAAAAAAAgAAAAAg=</HashCode>
+      <FileName>Database\CategoryRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="audioShopDBContext" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="AllCategories" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AudioShop.Database.DBObjects" Collapsed="true">
+    <Position X="6" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAEAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Database\DBObjects.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Categories" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AudioShop.Database.OrdersRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\OrdersRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="cart" />
+      <Field Name="dbContext" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AudioShop.Database.ProductImagesRepository" Collapsed="true">
+    <Position X="9.25" Y="17" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAEAAAAAAAAgAAAAAgACABAAEAAAAgQAAAAA=</HashCode>
+      <FileName>Database\ProductImagesRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="audioShopDBContext" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.Database.ProductRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="13" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BCIABAAAIAAAAAAAAAIAQAAAAAAAAAAAAAAAgAAAAAQ=</HashCode>
+      <FileName>Database\ProductRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="audioShopDBContext" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="getFavorite" />
+      <Property Name="Products" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AudioShop.ViewModels.CartViewModel" Collapsed="true">
+    <Position X="3.5" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\CartViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Cart" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AudioShop.ViewModels.HomeViewModel" Collapsed="true">
+    <Position X="11.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\HomeViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="favProducts" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AudioShop.ViewModels.LogoutViewModel" Collapsed="true">
+    <Position X="3.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\LogoutViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioShop.ViewModels.ProductEditViewModel" Collapsed="true">
+    <Position X="8.5" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAQAAAAAAAAAAAAAACIAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ProductEditViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Product" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="CategoriesList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AudioShop.ViewModels.ProductsListViewModel" Collapsed="true">
+    <Position X="10.5" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ProductsListViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="allProducts" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Microsoft.AspNetCore.Identity.UserManager&lt;TUser&gt;" Collapsed="true">
+    <Position X="12.5" Y="17.25" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="AudioShop.Data.Interfaces.IAllOrders" Collapsed="true">
+    <Position X="4.5" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Interfaces\IAllOrders.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioShop.Data.Interfaces.IAllProducts" Collapsed="true">
+    <Position X="7" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BCIABAAAIAAAAAAAAAIAQAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Data\Interfaces\IAllProducts.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioShop.Data.Interfaces.IProductsCategory" Collapsed="true">
+    <Position X="12.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAYAAAAAAAAAIAAAAAgAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Data\Interfaces\IProductsCategory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

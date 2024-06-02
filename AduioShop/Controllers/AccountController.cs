@@ -17,7 +17,7 @@ namespace AudioShop.Controllers
                                 RoleManager<IdentityRole> roleManager,
                                 ILoggerFactory Log)
         {
-            this.log = Log.CreateLogger(">>> Мой Logger ");
+            this.log = Log.CreateLogger(">>> Мій Logger ");
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -80,7 +80,6 @@ namespace AudioShop.Controllers
                     Name = model.Name,
                     Surname = model.Surname
                 };
-
                 var createResult = await _userManager.CreateAsync(user, model.Password);
                 if (createResult.Succeeded)
                 {
@@ -109,7 +108,6 @@ namespace AudioShop.Controllers
             }
             return View(model);
         }
-
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
